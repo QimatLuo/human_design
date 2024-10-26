@@ -968,3 +968,94 @@ function mock(): Promise<Root> {
     },
   });
 }
+
+export function arrow(x: number) {
+  switch (x) {
+    case 1:
+    case 2:
+    case 3:
+      return 1;
+    case 4:
+    case 5:
+    case 6:
+      return -1;
+    default:
+      console.warn("arrow", x);
+      return 0;
+  }
+}
+
+export function authority(x: number) {
+  switch (x) {
+    case 0:
+      return "情緒權威";
+    case 2:
+      return "脾權威";
+    default:
+      console.warn("authority", x);
+      return String(x);
+  }
+}
+
+export function center(i: number, xs: number[]) {
+  switch (xs[i]) {
+    case 0:
+    case 1:
+      return "#ffffff";
+    case 2:
+      return "#eec665";
+    default:
+      console.warn("center", xs[i]);
+      return "#000000";
+  }
+}
+
+export function cross(x: number) {
+  switch (x) {
+    case 125:
+      return "左角度交叉之動盪 (18/17 | 39/38)";
+    case 183:
+      return "右角度交叉之張力(38/39 | 48/21)";
+    default:
+      console.warn("cross", x);
+      return String(x);
+  }
+}
+
+export function definition(x: number) {
+  switch (x) {
+    case 1:
+      return "單一定義";
+    case 2:
+      return "二分定義";
+    default:
+      console.warn("definition", x);
+      return String(x);
+  }
+}
+
+export function gate(x: Gate) {
+  switch (x.mode) {
+    case 0:
+      return "green";
+    case 1:
+      return "#ec8a8c";
+    case 2:
+      return "#094166";
+    default:
+      console.warn("gate", x);
+      return "#000000";
+  }
+}
+
+export function state(x: number) {
+  switch (x) {
+    case 1:
+      return -1;
+    case 2:
+      return 1;
+    default:
+      console.warn("state", x);
+      return 0;
+  }
+}
