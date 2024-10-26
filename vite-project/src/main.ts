@@ -12,7 +12,7 @@ button {
 </style>
 <button>Sup?</button>`;
 
-class WhatsUp extends HTMLElement {
+class HumanDesign extends HTMLElement {
   
   connectedCallback() {
     this.attachShadow({mode: 'open'});
@@ -27,4 +27,4 @@ class WhatsUp extends HTMLElement {
   
 }
 
-window.customElements.define('whats-up', WhatsUp);
+window.customElements.define('human-design', HumanDesign);
