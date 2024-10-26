@@ -10,13 +10,31 @@ ${html}
 class HumanDesign extends HTMLElement {
   connectedCallback() {
     this.attachShadow({ mode: "open" });
-    this.shadowRoot.appendChild(template.content.cloneNode(true));
-    const button = this.shadowRoot.querySelector("button");
-    button.addEventListener("click", this.handleClick);
+    this.dom<ShadowRoot>(() => this.shadowRoot)
+      .then((dom) => {
+        dom.appendChild(template.content.cloneNode(true));
+        return this.dom<SVGPathElement>(() => dom.querySelector(".cls-8"));
+      })
+      .then((dom) => {
+        dom.addEventListener("click", (x) => this.handleClick(x));
+      });
   }
 
-  handleClick(e) {
-    alert("Sup?");
+  dom<T>(getDom: () => unknown) {
+    return new Promise<T>((resolve, reject) => {
+      const dom = getDom() as T;
+      if (dom) {
+        resolve(dom);
+      } else {
+        reject(new Error(getDom.toString()));
+      }
+    });
+  }
+
+  handleClick(e: Event) {
+    this.dom<SVGPathElement>(() => e.currentTarget).then((dom) => {
+      dom.style.fill = dom.style.fill === "red" ? "white" : "red";
+    });
   }
 }
 
