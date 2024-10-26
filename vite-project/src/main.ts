@@ -1,16 +1,11 @@
 import './style.css'
+import css from './component-style.css?raw'
+import html from './component-layout.html?raw'
 const template = document.createElement('template');
 template.innerHTML = `
-<style>
-button {
-  background: var(--background);
-  color: var(--color);
-  padding: var(--padding);
-  font-size: var(--font-size);
-  border: 0;
-}
-</style>
-<button>Sup?</button>`;
+<style>${css}</style>
+${html}
+`;
 
 class HumanDesign extends HTMLElement {
   
