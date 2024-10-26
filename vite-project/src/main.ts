@@ -10,14 +10,22 @@ ${html}
 class HumanDesign extends HTMLElement {
   connectedCallback() {
     this.attachShadow({ mode: "open" });
-    this.dom<ShadowRoot>(() => this.shadowRoot)
-      .then((dom) => {
-        dom.appendChild(template.content.cloneNode(true));
-        return this.dom<SVGPathElement>(() => dom.querySelector(".cls-8"));
-      })
-      .then((dom) => {
-        dom.addEventListener("click", (x) => this.handleClick(x));
+    this.dom<ShadowRoot>(() => this.shadowRoot).then((root) => {
+      root.appendChild(template.content.cloneNode(true));
+
+      this.dom<SVGPathElement>(() => root.querySelector(".cls-8")).then(
+        (dom) => {
+          dom.addEventListener("click", (x) => this.handleClick(x));
+        },
+      );
+
+      Promise.all([
+        this.dom<HTMLInputElement>(() => root.querySelector("input")),
+        this.dom<SVGTextElement>(() => root.querySelector("svg .name")),
+      ]).then(([input, text]) => {
+        input.addEventListener("input", () => this.updateName(input, text));
       });
+    });
   }
 
   dom<T>(getDom: () => unknown) {
@@ -35,6 +43,10 @@ class HumanDesign extends HTMLElement {
     this.dom<SVGPathElement>(() => e.currentTarget).then((dom) => {
       dom.style.fill = dom.style.fill === "red" ? "white" : "red";
     });
+  }
+
+  updateName(input: HTMLInputElement, text: SVGTextElement) {
+    text.textContent = input.value;
   }
 }
 
