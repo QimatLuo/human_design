@@ -1,7 +1,3 @@
 button {
-  background: var(--background);
-  color: var(--color);
-  padding: var(--padding);
-  font-size: var(--font-size);
-  border: 0;
+  cursor: pointer;
 }
