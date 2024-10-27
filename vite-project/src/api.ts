@@ -1,4 +1,4 @@
-export async function getChart(time: string, timezone: string) {
+export async function getChart(name: string, time: string, timezone: string) {
   const url =
     location.hostname === "localhost"
       ? "https://qimat.apps.beta.diagnostic.westpharma.com/human_design"
@@ -17,7 +17,7 @@ export async function getChart(time: string, timezone: string) {
         time,
       },
       data: {
-        name: time.replace("T", " ").replace("Z", "").slice(0, -7),
+        name,
       },
     }),
     method: "POST",
@@ -191,6 +191,8 @@ export function authority(x: number) {
       return "情緒權威";
     case 2:
       return "脾權威";
+    case 5:
+      return "投射型心權威";
     default:
       console.warn("authority", x);
       return String(x);
@@ -212,10 +214,16 @@ export function center(i: number, xs: number[]) {
 
 export function cross(x: number) {
   switch (x) {
+    case 79:
+      return "左角度交叉之要求 (58/52 | 48/21)";
     case 125:
       return "左角度交叉之動盪 (18/17 | 39/38)";
+    case 181:
+      return "右角度交叉之張力 (39/38 | 21/48)";
     case 183:
-      return "右角度交叉之張力(38/39 | 48/21)";
+      return "右角度交叉之張力 (38/39 | 48/21)";
+    case 188:
+      return "右角度交叉之愛的器皿 (25/46 | 10/15)";
     default:
       console.warn("cross", x);
       return String(x);
