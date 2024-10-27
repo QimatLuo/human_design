@@ -37,25 +37,25 @@ export interface Root {
 export interface Chart {
   planets: Planet[];
   gates: Gate[];
-  channels: number[];
+  channels?: number[];
   centers: number[];
-  profile: number;
+  profile?: number;
   cross: number;
-  variable: number;
-  designBaseOrientation: number;
-  determination: number;
-  cognition: number;
-  environment: number;
-  personalityBaseOrientation: number;
-  motivation: number;
-  transference: number;
-  sense: number;
-  view: number;
-  type: number;
+  variable?: number;
+  designBaseOrientation?: number;
+  determination?: number;
+  cognition?: number;
+  environment?: number;
+  personalityBaseOrientation?: number;
+  motivation?: number;
+  transference?: number;
+  sense?: number;
+  view?: number;
+  type?: number;
   authority: number;
   definition: number;
-  group: Group;
-  cycles: Cycles;
+  group?: Group;
+  cycles?: Cycles;
 }
 
 export interface Planet {
@@ -111,13 +111,13 @@ export interface Cycles {
 }
 
 export interface Meta {
-  type: string;
+  type?: string;
   name: string;
-  tags: any[];
-  created: string;
-  updated: string;
-  dirty: boolean;
-  birthData: BirthData;
+  tags?: any[];
+  created?: string;
+  updated?: string;
+  dirty?: boolean;
+  birthData?: BirthData;
 }
 
 export interface BirthData {
@@ -197,8 +197,12 @@ export function authority(x: number) {
     case 2:
       return "脾權威";
     default:
-      console.warn("authority", x);
-      return String(x);
+      if (isNaN(x)) {
+        return "";
+      } else {
+        console.warn("authority", x);
+        return String(x);
+      }
   }
 }
 
@@ -222,8 +226,12 @@ export function cross(x: number) {
     case 183:
       return "右角度交叉之張力(38/39 | 48/21)";
     default:
-      console.warn("cross", x);
-      return String(x);
+      if (isNaN(x)) {
+        return "";
+      } else {
+        console.warn("cross", x);
+        return String(x);
+      }
   }
 }
 
@@ -234,8 +242,12 @@ export function definition(x: number) {
     case 2:
       return "二分定義";
     default:
-      console.warn("definition", x);
-      return String(x);
+      if (isNaN(x)) {
+        return "";
+      } else {
+        console.warn("definition", x);
+        return String(x);
+      }
   }
 }
 

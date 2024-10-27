@@ -1,6 +1,7 @@
 import "./style.css";
 import css from "./component-style.css?raw";
 import Form from "./form.html?raw";
+import Control from "./control.html?raw";
 import Result from "./result.html?raw";
 import Svg from "./svg.html?raw";
 import * as api from "./api";
@@ -11,6 +12,7 @@ template.innerHTML = `
 ${Form}
 ${Svg}
 ${Result}
+${Control}
 `;
 const SVG_NS = "http://www.w3.org/2000/svg";
 
@@ -27,6 +29,9 @@ class HumanDesign extends HTMLElement {
       text.addEventListener("click", () => {
         text.textContent = prompt("更改名稱");
       });
+    });
+    this.dom<HTMLButtonElement>(`.control .reset`).then((button) => {
+      button.addEventListener("click", () => this.resetChart());
     });
 
     this.dom<HTMLInputElement>(`input[type="range"]`).then((input) => {
@@ -201,6 +206,22 @@ class HumanDesign extends HTMLElement {
         g.append(this.createPlantValue(x, shift));
         g.append(...this.createTriggers(x, shift));
       });
+    });
+  }
+
+  resetChart() {
+    this.drawChart({
+      chart: {
+        authority: NaN,
+        centers: [1, 1, 1, 1, 1, 1, 1, 1, 1],
+        cross: NaN,
+        definition: NaN,
+        gates: [],
+        planets: [],
+      },
+      meta: {
+        name: "",
+      },
     });
   }
 }
