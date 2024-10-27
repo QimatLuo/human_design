@@ -34,6 +34,10 @@ class HumanDesign extends HTMLElement {
       button.addEventListener("click", () => this.resetChart());
     });
 
+    this.dom<HTMLButtonElement>(`.control .multi`).then((button) => {
+      button.addEventListener("click", () => this.drawMuliCharts());
+    });
+
     this.dom<HTMLInputElement>(`input[type="range"]`).then((input) => {
       input.addEventListener("input", () => {
         const x = this.charts.at(+input.value);
@@ -55,24 +59,9 @@ class HumanDesign extends HTMLElement {
         e.stopPropagation();
 
         const iso8601 = `${date.value}T${time.value}:00.000Z`;
-        Promise.all(
-          [iso8601]
-            .concat(
-              Array<DateTime<true> | DateTime<false>>(12)
-                .fill(DateTime.fromISO(iso8601).toUTC())
-                .filter((x) => x.isValid)
-                .map((x, i) => x.minus({ hour: i + 1 }).toJSON()),
-              Array<DateTime<true> | DateTime<false>>(11)
-                .fill(DateTime.fromISO(iso8601).toUTC())
-                .filter((x) => x.isValid)
-                .map((x, i) => x.plus({ hour: i + 1 }).toJSON()),
-            )
-            .map((x) => api.getChart(x, country.value, timezone.value)),
-        ).then((xs) => {
-          this.charts = xs.toSorted((a, b) =>
-            a.meta.name > b.meta.name ? 1 : -1,
-          );
-          xs.slice(0, 1).forEach((x) => this.drawChart(x));
+        api.getChart(iso8601, country.value, timezone.value).then((x) => {
+          this.charts = [x];
+          this.drawChart(x);
         });
       });
     });
@@ -196,6 +185,38 @@ class HumanDesign extends HTMLElement {
     });
   }
 
+  drawMuliCharts() {
+    const shift = (time: string, n: number) =>
+      Array<DateTime<true> | DateTime<false>>(Math.abs(n))
+        .fill(DateTime.fromISO(time).toUTC())
+        .filter((x) => x.isValid)
+        .map((x, i) => x.plus({ hour: (i + 1) * (n < 0 ? -1 : 1) }).toJSON());
+
+    this.dom<HTMLElement>(".control").then((section) => {
+      section.classList.add("is-loading");
+
+      Promise.all(
+        this.charts
+          .slice(0, 1)
+          .map((x) => ({
+            country: x.meta.birthData.location.country.id,
+            time: `${x.meta.birthData.time.local}Z`,
+            timezone: x.meta.birthData.location.country.tz,
+          }))
+          .flatMap(({ country, time, timezone }) =>
+            Array.of<string>()
+              .concat(shift(time, -12), shift(time, 11))
+              .map((x) => api.getChart(x, country, timezone)),
+          ),
+      ).then((xs) => {
+        this.charts.push(...xs);
+        this.charts.sort((a, b) => (a.meta.name > b.meta.name ? 1 : -1));
+        section.classList.add("is-multi");
+        section.classList.remove("is-loading");
+      });
+    });
+  }
+
   drawPlanets(planets: api.Planet[]) {
     this.drawArrows(planets);
 
@@ -220,8 +241,23 @@ class HumanDesign extends HTMLElement {
         planets: [],
       },
       meta: {
+        birthData: {
+          location: {
+            country: {
+              id: "",
+              tz: "",
+            },
+          },
+          time: {
+            local: "",
+          },
+        },
         name: "",
       },
+    });
+    this.charts = [];
+    this.dom<HTMLElement>(".control").then((section) => {
+      section.classList.remove("is-multi");
     });
   }
 }

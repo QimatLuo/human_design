@@ -61,3 +61,19 @@ button {
 .control>div>input {
   width: 100%;
 }
+
+.control.is-multi .multi {
+  display: none;
+}
+
+.control:not(.is-multi) input {
+  display: none;
+}
+
+.control.is-loading button {
+  display: none;
+}
+
+.control:not(.is-loading) progress {
+  display: none;
+}

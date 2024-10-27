@@ -117,23 +117,23 @@ export interface Meta {
   created?: string;
   updated?: string;
   dirty?: boolean;
-  birthData?: BirthData;
+  birthData: BirthData;
 }
 
 export interface BirthData {
   location: Location;
   time: Time;
-  reliability: Reliability;
+  reliability?: Reliability;
 }
 
 export interface Location {
   country: Country;
-  city: City;
+  city?: City;
 }
 
 export interface Country {
   id: string;
-  name: string;
+  name?: string;
   tz: string;
 }
 
@@ -145,10 +145,10 @@ export interface City {
 
 export interface Time {
   local: string;
-  utc: string;
-  status: string;
-  timezone: Timezone;
-  dst: any;
+  utc?: string;
+  status?: string;
+  timezone?: Timezone;
+  dst?: any;
 }
 
 export interface Timezone {
