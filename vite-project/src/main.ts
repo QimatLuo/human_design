@@ -23,6 +23,12 @@ class HumanDesign extends HTMLElement {
       this.shadowRoot.appendChild(template.content.cloneNode(true));
     }
 
+    this.dom<SVGTextElement>(`svg text.name`).then((text) => {
+      text.addEventListener("click", () => {
+        text.textContent = prompt("更改名稱");
+      });
+    });
+
     this.dom<HTMLInputElement>(`input[type="range"]`).then((input) => {
       input.addEventListener("input", () => {
         const x = this.charts.at(+input.value);
@@ -34,12 +40,11 @@ class HumanDesign extends HTMLElement {
 
     Promise.all([
       this.dom<HTMLFormElement>("form"),
-      this.dom<HTMLInputElement>('form>input[name="name"]'),
       this.dom<HTMLInputElement>('form>input[name="date"]'),
       this.dom<HTMLInputElement>('form>input[name="time"]'),
       this.dom<HTMLInputElement>('form>select[name="country"]'),
       this.dom<HTMLInputElement>('form>select[name="timezone"]'),
-    ]).then(([form, name, date, time, country, timezone]) => {
+    ]).then(([form, date, time, country, timezone]) => {
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -57,9 +62,7 @@ class HumanDesign extends HTMLElement {
                 .filter((x) => x.isValid)
                 .map((x, i) => x.plus({ hour: i + 1 }).toJSON()),
             )
-            .map((x) =>
-              api.getChart(name.value, x, country.value, timezone.value),
-            ),
+            .map((x) => api.getChart(x, country.value, timezone.value)),
         ).then((xs) => {
           this.charts = xs.toSorted((a, b) =>
             a.meta.name > b.meta.name ? 1 : -1,

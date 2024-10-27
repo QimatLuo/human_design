@@ -1,5 +1,4 @@
 export async function getChart(
-  name: string,
   time: string,
   country: string,
   timezone: string,
@@ -23,7 +22,7 @@ export async function getChart(
         time,
       },
       data: {
-        name,
+        name: time.replace("T", " ").replace("Z", "").slice(0, -7),
       },
     }),
     method: "POST",
