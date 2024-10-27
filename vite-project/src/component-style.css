@@ -1,3 +1,63 @@
 button {
   cursor: pointer;
+  background: #094166;
+  color: #ffffff;
+  border: none;
+  padding: 0.5em 1.5em;
+  border-radius: 2em;
+}
+
+.result {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 8px;
+}
+
+.result>div {
+  display: grid;
+  grid-template-columns: 6em 1em auto;
+  align-items: center;
+  border: 1px solid #ededed;
+  border-radius: 10px;
+  flex-basis: 100%;
+  box-sizing: border-box;
+}
+
+.result>div:nth-of-type(5),
+.result>div:nth-of-type(6),
+.result>div:nth-of-type(7),
+.result>div:nth-of-type(8) {
+  grid-column: 1 / -1;
+}
+
+
+.result>div>lable {
+  text-align: center;
+  margin: 1em 0;
+}
+
+.result>div>hr {
+  border: 1px solid #ededed;
+  align-self: stretch;
+}
+
+.result>div>span {
+  text-align: center;
+  color: #094166;
+  font-weight: bold;
+}
+
+.control {
+  margin-top: 1em;
+  display: grid;
+  gap: 1em;
+}
+
+.control>div {
+  text-align: center;
+  width: 100%;
+}
+
+.control>div>input {
+  width: 100%;
 }
