@@ -32,10 +32,23 @@ class HumanDesign extends HTMLElement {
     Promise.all([
       this.dom<HTMLFormElement>("form"),
       this.dom<HTMLInputElement>('form>input[name="name"]'),
-    ]).then(([form, name]) => {
+      this.dom<HTMLInputElement>('form>input[name="date"]'),
+      this.dom<HTMLInputElement>('form>input[name="time"]'),
+      this.dom<HTMLInputElement>('form>select[name="country"]'),
+      this.dom<HTMLInputElement>('form>select[name="timezone"]'),
+    ]).then(([form, name, date, time, country, timezone]) => {
       form.addEventListener("submit", (e) => {
         e.preventDefault();
-        api.getChart(name.value).then((x) => this.drawChart(x));
+        e.stopPropagation();
+        api
+          .getChart(
+            name.value,
+            date.value,
+            time.value,
+            country.value,
+            timezone.value,
+          )
+          .then((x) => this.drawChart(x));
       });
     });
   }
