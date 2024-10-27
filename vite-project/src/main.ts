@@ -70,15 +70,6 @@ class HumanDesign extends HTMLElement {
     });
   }
 
-  createArrowValue(x: api.Planet, type: "base" | "tone") {
-    const [left, right] = type === "base" ? ["207", "485"] : ["227", "465"];
-    const dom = document.createElementNS(SVG_NS, "text");
-    dom.setAttributeNS(null, "x", x.activation === 0 ? left : right);
-    dom.setAttributeNS(null, "y", `${x.id * 73 + 187}`);
-    dom.textContent = String(x.tone);
-    return dom;
-  }
-
   createPlantValue(x: api.Planet, shift: number) {
     const value = ` ${x.gate}.${x.line}`;
     const dom = document.createElementNS(SVG_NS, "text");
@@ -123,29 +114,30 @@ class HumanDesign extends HTMLElement {
   }
 
   drawArrows(planets: api.Planet[]) {
-    this.dom<SVGGElement>(".arrows").then((g) => {
-      Array<number>(2)
-        .fill(0)
-        .map((x, i) => x + i)
-        .flatMap((activation) =>
-          Array<number>(2)
-            .fill(0)
-            .map((x, i) => x + i)
-            .map((id) => ({ activation, id })),
-        )
-        .map((x) =>
-          planets.find((p) => p.activation === x.activation && p.id === x.id),
-        )
-        .filter((x) => !!x)
-        .forEach((x) => {
-          g.append(this.createArrowValue(x, "tone"));
-          g.append(this.createArrowValue(x, "base"));
-
-          this.dom<SVGGElement>(`.arrow${x.activation}${x.id}`).then((a) => {
-            a.style.transform = `scale(${api.arrow(x.tone)},1)`;
-          });
+    Array<number>(2)
+      .fill(0)
+      .map((x, i) => x + i)
+      .flatMap((activation) =>
+        Array<number>(2)
+          .fill(0)
+          .map((x, i) => x + i)
+          .map((id) => ({ activation, id })),
+      )
+      .map((x) =>
+        planets.find((p) => p.activation === x.activation && p.id === x.id),
+      )
+      .filter((x) => !!x)
+      .forEach((x) => {
+        this.dom<SVGGElement>(`.tone${x.activation}${x.id}`).then((a) => {
+          a.textContent = `${x.tone}`;
         });
-    });
+        this.dom<SVGGElement>(`.base${x.activation}${x.id}`).then((a) => {
+          a.textContent = `${x.base}`;
+        });
+        this.dom<SVGGElement>(`.arrow${x.activation}${x.id}`).then((a) => {
+          a.style.transform = `scale(${api.arrow(x.tone)},1)`;
+        });
+      });
   }
 
   drawCenters(centers: number[]) {
