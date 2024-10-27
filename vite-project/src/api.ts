@@ -37,25 +37,25 @@ export interface Root {
 export interface Chart {
   planets: Planet[];
   gates: Gate[];
-  channels?: number[];
+  channels: number[];
   centers: number[];
-  profile?: number;
+  profile: number;
   cross: number;
-  variable?: number;
-  designBaseOrientation?: number;
-  determination?: number;
-  cognition?: number;
-  environment?: number;
-  personalityBaseOrientation?: number;
-  motivation?: number;
-  transference?: number;
-  sense?: number;
-  view?: number;
-  type?: number;
+  variable: number;
+  designBaseOrientation: number;
+  determination: number;
+  cognition: number;
+  environment: number;
+  personalityBaseOrientation: number;
+  motivation: number;
+  transference: number;
+  sense: number;
+  view: number;
+  type: number;
   authority: number;
   definition: number;
-  group?: Group;
-  cycles?: Cycles;
+  group: Group;
+  cycles: Cycles;
 }
 
 export interface Planet {
@@ -74,7 +74,7 @@ export interface Planet {
   linePercent: number;
   tonePercent: number;
   chartId: number;
-  baseAlignment?: number;
+  baseAlignment: number;
 }
 
 export interface Fixing {
@@ -111,29 +111,29 @@ export interface Cycles {
 }
 
 export interface Meta {
-  type?: string;
+  type: string;
   name: string;
-  tags?: any[];
-  created?: string;
-  updated?: string;
-  dirty?: boolean;
+  tags: any[];
+  created: string;
+  updated: string;
+  dirty: boolean;
   birthData: BirthData;
 }
 
 export interface BirthData {
   location: Location;
   time: Time;
-  reliability?: Reliability;
+  reliability: Reliability;
 }
 
 export interface Location {
   country: Country;
-  city?: City;
+  city: City;
 }
 
 export interface Country {
   id: string;
-  name?: string;
+  name: string;
   tz: string;
 }
 
@@ -145,10 +145,10 @@ export interface City {
 
 export interface Time {
   local: string;
-  utc?: string;
-  status?: string;
-  timezone?: Timezone;
-  dst?: any;
+  utc: string;
+  status: string;
+  timezone: Timezone;
+  dst: any;
 }
 
 export interface Timezone {

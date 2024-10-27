@@ -9,10 +9,12 @@ import { DateTime } from "luxon";
 const template = document.createElement("template");
 template.innerHTML = `
 <style>${css}</style>
+<main class="init">
 ${Form}
 ${Svg}
 ${Result}
 ${Control}
+</main>
 `;
 const SVG_NS = "http://www.w3.org/2000/svg";
 
@@ -58,11 +60,11 @@ class HumanDesign extends HTMLElement {
         e.preventDefault();
         e.stopPropagation();
 
-        const iso8601 = `${date.value}T${time.value}:00.000Z`;
-        api.getChart(iso8601, country.value, timezone.value).then((x) => {
-          this.charts = [x];
-          this.drawChart(x);
-        });
+        this.initialChart(
+          `${date.value}T${time.value}:00.000Z`,
+          country.value,
+          timezone.value,
+        );
       });
     });
   }
@@ -230,33 +232,27 @@ class HumanDesign extends HTMLElement {
     });
   }
 
-  resetChart() {
-    this.drawChart({
-      chart: {
-        authority: NaN,
-        centers: [1, 1, 1, 1, 1, 1, 1, 1, 1],
-        cross: NaN,
-        definition: NaN,
-        gates: [],
-        planets: [],
-      },
-      meta: {
-        birthData: {
-          location: {
-            country: {
-              id: "",
-              tz: "",
-            },
-          },
-          time: {
-            local: "",
-          },
-        },
-        name: "",
-      },
+  initialChart(time: string, country: string, timezone: string) {
+    this.dom<HTMLElement>("main").then((dom) => {
+      dom.classList.add("is-loading");
+
+      api.getChart(time, country, timezone).then((x) => {
+        this.charts = [x];
+        this.drawChart(x);
+
+        dom.classList.remove("is-loading");
+        dom.classList.remove("init");
+      });
     });
+  }
+
+  resetChart() {
     this.charts = [];
-    this.dom<HTMLElement>(".control").then((section) => {
+    Promise.all([
+      this.dom<HTMLElement>(".control"),
+      this.dom<HTMLElement>("main"),
+    ]).then(([section, main]) => {
+      main.classList.add("init");
       section.classList.remove("is-multi");
     });
   }

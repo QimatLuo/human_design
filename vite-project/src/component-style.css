@@ -1,3 +1,21 @@
+main.init svg,
+main.init .result,
+main.init .control {
+  display: none;
+}
+
+main:not(.init) .form {
+  display: none;
+}
+
+main.is-loading section.form form {
+  display: none;
+}
+
+main:not(.is-loading) progress {
+  display: none;
+}
+
 button {
   cursor: pointer;
   background: #094166;
