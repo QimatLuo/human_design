@@ -1,8 +1,4 @@
-export async function getChart(
-  time: string,
-  country: string,
-  timezone: string,
-) {
+export async function getChart(time: string, timezone: string) {
   const url =
     location.hostname === "localhost"
       ? "https://qimat.apps.beta.diagnostic.westpharma.com/human_design"
@@ -16,7 +12,6 @@ export async function getChart(
     },
     body: JSON.stringify({
       tzData: {
-        country,
         timezone,
         timeInUtc: false,
         time,

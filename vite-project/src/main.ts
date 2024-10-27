@@ -6,6 +6,7 @@ import Result from "./result.html?raw";
 import Svg from "./svg.html?raw";
 import * as api from "./api";
 import { DateTime } from "luxon";
+import { timezones } from "./timezone";
 const template = document.createElement("template");
 template.innerHTML = `
 <style>${css}</style>
@@ -27,11 +28,23 @@ class HumanDesign extends HTMLElement {
       this.shadowRoot.appendChild(template.content.cloneNode(true));
     }
 
+    this.dom<HTMLSelectElement>(`form select[name="timezone"]`).then(
+      (select) => {
+        timezones.forEach((x) => {
+          const option = document.createElement("option");
+          option.textContent = x;
+          select.append(option);
+        });
+        select.value = "Asia/Taipei";
+      },
+    );
+
     this.dom<SVGTextElement>(`svg text.name`).then((text) => {
       text.addEventListener("click", () => {
         text.textContent = prompt("更改名稱");
       });
     });
+
     this.dom<HTMLButtonElement>(`.control .reset`).then((button) => {
       button.addEventListener("click", () => this.resetChart());
     });
@@ -53,16 +66,14 @@ class HumanDesign extends HTMLElement {
       this.dom<HTMLFormElement>("form"),
       this.dom<HTMLInputElement>('form input[name="date"]'),
       this.dom<HTMLInputElement>('form input[name="time"]'),
-      this.dom<HTMLInputElement>('form select[name="country"]'),
       this.dom<HTMLInputElement>('form select[name="timezone"]'),
-    ]).then(([form, date, time, country, timezone]) => {
+    ]).then(([form, date, time, timezone]) => {
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         e.stopPropagation();
 
         this.initialChart(
           `${date.value}T${time.value}:00.000Z`,
-          country.value,
           timezone.value,
         );
       });
@@ -200,15 +211,15 @@ class HumanDesign extends HTMLElement {
       Promise.all(
         this.charts
           .slice(0, 1)
-          .map((x) => ({
-            country: x.meta.birthData.location.country.id,
-            time: `${x.meta.birthData.time.local}Z`,
-            timezone: x.meta.birthData.location.country.tz,
+          .map((x) => x.meta.birthData.time)
+          .map(({ local, timezone }) => ({
+            time: `${local}Z`,
+            timezone: timezone.id,
           }))
-          .flatMap(({ country, time, timezone }) =>
+          .flatMap(({ time, timezone }) =>
             Array.of<string>()
               .concat(shift(time, -12), shift(time, 11))
-              .map((x) => api.getChart(x, country, timezone)),
+              .map((x) => api.getChart(x, timezone)),
           ),
       ).then((xs) => {
         this.charts.push(...xs);
@@ -232,11 +243,11 @@ class HumanDesign extends HTMLElement {
     });
   }
 
-  initialChart(time: string, country: string, timezone: string) {
+  initialChart(time: string, timezone: string) {
     this.dom<HTMLElement>("main").then((dom) => {
       dom.classList.add("is-loading");
 
-      api.getChart(time, country, timezone).then((x) => {
+      api.getChart(time, timezone).then((x) => {
         this.charts = [x];
         this.drawChart(x);
 
