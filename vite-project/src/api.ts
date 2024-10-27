@@ -192,12 +192,8 @@ export function authority(x: number) {
     case 2:
       return "脾權威";
     default:
-      if (isNaN(x)) {
-        return "";
-      } else {
-        console.warn("authority", x);
-        return String(x);
-      }
+      console.warn("authority", x);
+      return String(x);
   }
 }
 
@@ -221,12 +217,8 @@ export function cross(x: number) {
     case 183:
       return "右角度交叉之張力(38/39 | 48/21)";
     default:
-      if (isNaN(x)) {
-        return "";
-      } else {
-        console.warn("cross", x);
-        return String(x);
-      }
+      console.warn("cross", x);
+      return String(x);
   }
 }
 
@@ -237,12 +229,8 @@ export function definition(x: number) {
     case 2:
       return "二分定義";
     default:
-      if (isNaN(x)) {
-        return "";
-      } else {
-        console.warn("definition", x);
-        return String(x);
-      }
+      console.warn("definition", x);
+      return String(x);
   }
 }
 
