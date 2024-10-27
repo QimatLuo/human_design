@@ -1,6 +1,5 @@
 export async function getChart(
   name: string,
-  date: string,
   time: string,
   country: string,
   timezone: string,
@@ -9,7 +8,6 @@ export async function getChart(
     location.hostname === "localhost"
       ? "https://qimat.apps.beta.diagnostic.westpharma.com/human_design"
       : "https://app.maiamechanics.com/api-v2/api/web-calculator/server-side-generation";
-  const iso8601 = `${date}T${time}:00.000Z`;
 
   return fetch(url, {
     headers: {
@@ -22,7 +20,7 @@ export async function getChart(
         country,
         timezone,
         timeInUtc: false,
-        time: iso8601,
+        time,
       },
       data: {
         name,

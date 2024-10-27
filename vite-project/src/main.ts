@@ -4,6 +4,7 @@ import Form from "./form.html?raw";
 import Result from "./result.html?raw";
 import Svg from "./svg.html?raw";
 import * as api from "./api";
+import { DateTime } from "luxon";
 const template = document.createElement("template");
 template.innerHTML = `
 <style>${css}</style>
@@ -40,11 +41,18 @@ class HumanDesign extends HTMLElement {
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         e.stopPropagation();
+
+        const iso8601 = `${date.value}T${time.value}:00.000Z`;
+        const [h] = time.value.split(":");
+        Array<number>(+h)
+          .fill(1)
+          .map((x, i) => x + i)
+          .map((x) => x % 24);
         api
           .getChart(
             name.value,
-            date.value,
-            time.value,
+            DateTime.fromISO(iso8601).toUTC().plus({ hour: 1 }).toJSON() ??
+              iso8601,
             country.value,
             timezone.value,
           )
