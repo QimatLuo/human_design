@@ -51,10 +51,10 @@ class HumanDesign extends HTMLElement {
 
     Promise.all([
       this.dom<HTMLFormElement>("form"),
-      this.dom<HTMLInputElement>('form>input[name="date"]'),
-      this.dom<HTMLInputElement>('form>input[name="time"]'),
-      this.dom<HTMLInputElement>('form>select[name="country"]'),
-      this.dom<HTMLInputElement>('form>select[name="timezone"]'),
+      this.dom<HTMLInputElement>('form input[name="date"]'),
+      this.dom<HTMLInputElement>('form input[name="time"]'),
+      this.dom<HTMLInputElement>('form select[name="country"]'),
+      this.dom<HTMLInputElement>('form select[name="timezone"]'),
     ]).then(([form, date, time, country, timezone]) => {
       form.addEventListener("submit", (e) => {
         e.preventDefault();

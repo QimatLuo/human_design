@@ -1,15 +1,33 @@
 <section class="form">
   <h1>取得人類圖</h1>
   <form>
-    <input type="date" name="date" value="1999-12-31" />
-    <input type="time" name="time" value="14:00" />
-    <select name="country">
-      <option value="TW">台灣</option>
-    </select>
-    <select name="timezone">
-      <option value="Asia/Taipei">台北</option>
-    </select>
-    <button type="submit">取得人類圖</button>
+    <div class="labled">
+      <lable>日期</lable>
+      <hr>
+      <input type="date" name="date" value="1999-12-31" />
+    </div>
+    <div class="labled">
+      <lable>時間</lable>
+      <hr>
+      <input type="time" name="time" value="14:00" />
+    </div>
+    <div class="labled">
+      <lable>國家</lable>
+      <hr>
+      <select name="country">
+        <option value="TW">台灣</option>
+      </select>
+    </div>
+    <div class="labled">
+      <lable>城市</lable>
+      <hr>
+      <select name="timezone">
+        <option value="Asia/Taipei">台北</option>
+      </select>
+    </div>
+    <div>
+      <button type="submit">取得人類圖</button>
+    </div>
   </form>
   <progress></progress>
 </section>
