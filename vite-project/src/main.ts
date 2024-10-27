@@ -164,7 +164,7 @@ class HumanDesign extends HTMLElement {
 
   drawChart(res: api.Root) {
     this.drawCenters(res.chart.centers);
-    this.drawGates(res.chart.gates);
+    //this.drawGates(res.chart.gates);
     this.drawPlanets(res.chart.planets);
     Promise.all([
       this.dom<SVGTextElement>(".authority"),
