@@ -15,18 +15,20 @@ ${Result}
 const SVG_NS = "http://www.w3.org/2000/svg";
 
 class HumanDesign extends HTMLElement {
+  charts: api.Root[] = [];
+
   connectedCallback() {
     this.attachShadow({ mode: "open" });
     if (this.shadowRoot) {
       this.shadowRoot.appendChild(template.content.cloneNode(true));
     }
 
-    Promise.all([
-      this.dom<HTMLInputElement>("input"),
-      this.dom<SVGTextElement>("svg .name"),
-    ]).then(([input, text]) => {
+    this.dom<HTMLInputElement>(`input[type="range"]`).then((input) => {
       input.addEventListener("input", () => {
-        text.textContent = input.value;
+        const x = this.charts.at(+input.value);
+        if (x) {
+          this.drawChart(x);
+        }
       });
     });
 
@@ -43,20 +45,27 @@ class HumanDesign extends HTMLElement {
         e.stopPropagation();
 
         const iso8601 = `${date.value}T${time.value}:00.000Z`;
-        const [h] = time.value.split(":");
-        Array<number>(+h)
-          .fill(1)
-          .map((x, i) => x + i)
-          .map((x) => x % 24);
-        api
-          .getChart(
-            name.value,
-            DateTime.fromISO(iso8601).toUTC().plus({ hour: 1 }).toJSON() ??
-              iso8601,
-            country.value,
-            timezone.value,
-          )
-          .then((x) => this.drawChart(x));
+        Promise.all(
+          [iso8601]
+            .concat(
+              Array<DateTime<true> | DateTime<false>>(12)
+                .fill(DateTime.fromISO(iso8601).toUTC())
+                .filter((x) => x.isValid)
+                .map((x, i) => x.minus({ hour: i + 1 }).toJSON()),
+              Array<DateTime<true> | DateTime<false>>(11)
+                .fill(DateTime.fromISO(iso8601).toUTC())
+                .filter((x) => x.isValid)
+                .map((x, i) => x.plus({ hour: i + 1 }).toJSON()),
+            )
+            .map((x) =>
+              api.getChart(name.value, x, country.value, timezone.value),
+            ),
+        ).then((xs) => {
+          this.charts = xs.toSorted((a, b) =>
+            a.meta.name > b.meta.name ? 1 : -1,
+          );
+          xs.slice(0, 1).forEach((x) => this.drawChart(x));
+        });
       });
     });
   }
