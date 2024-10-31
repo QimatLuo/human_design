@@ -1,3 +1,15 @@
+main {
+  background-image: url('sample.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background: #ffffff;
+}
+
+main * {
+  visibility: initial;
+  box-sizing: border-box;
+}
+
 main.init svg,
 main.init .result,
 main.init .control {
@@ -42,47 +54,48 @@ form input,
 form select {
   height: 100%;
   border: none;
-  margin-right: 1em;
+  margin: 0 1em;
 }
 
-form > div:last-child {
+form>div:last-child {
   text-align: center;
 }
 
 .result {
+  margin: 1.6vw 5vw;
   display: grid;
   grid-template-columns: 50% 50%;
   gap: 8px;
 }
 
-.result > div:nth-of-type(5),
-.result > div:nth-of-type(6),
-.result > div:nth-of-type(7),
-.result > div:nth-of-type(8) {
+.result>div:nth-of-type(5),
+.result>div:nth-of-type(6),
+.result>div:nth-of-type(7),
+.result>div:nth-of-type(8) {
   grid-column: 1 / -1;
 }
 
 .labled {
   display: grid;
-  grid-template-columns: 6em 1em auto;
+  grid-template-columns: 4.4em 1px auto;
   align-items: center;
   border: 1px solid #ededed;
   border-radius: 10px;
   flex-basis: 100%;
-  box-sizing: border-box;
 }
 
-.labled > lable {
+.labled>lable {
   text-align: center;
-  margin: 1em 0;
+  margin: 1.5em 0;
+  font-size: 0.63em;
 }
 
-.labled > hr {
+.labled>hr {
   border: 1px solid #ededed;
   align-self: stretch;
 }
 
-.labled > span {
+.labled>span {
   text-align: center;
   color: #094166;
   font-weight: bold;
@@ -94,12 +107,12 @@ form > div:last-child {
   gap: 1em;
 }
 
-.control > div {
+.control>div {
   text-align: center;
   width: 100%;
 }
 
-.control > div > input {
+.control>div>input {
   width: 100%;
 }
 
