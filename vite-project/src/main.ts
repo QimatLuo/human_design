@@ -39,12 +39,6 @@ class HumanDesign extends HTMLElement {
       },
     );
 
-    this.dom<SVGTextElement>(`svg text.name`).then((text) => {
-      text.addEventListener("click", () => {
-        text.textContent = prompt("更改名稱");
-      });
-    });
-
     this.dom<HTMLButtonElement>(`.control .reset`).then((button) => {
       button.addEventListener("click", () => this.resetChart());
     });
@@ -64,15 +58,17 @@ class HumanDesign extends HTMLElement {
 
     Promise.all([
       this.dom<HTMLFormElement>("form"),
+      this.dom<HTMLInputElement>('form input[name="name"]'),
       this.dom<HTMLInputElement>('form input[name="date"]'),
       this.dom<HTMLInputElement>('form input[name="time"]'),
       this.dom<HTMLInputElement>('form select[name="timezone"]'),
-    ]).then(([form, date, time, timezone]) => {
+    ]).then(([form, name, date, time, timezone]) => {
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         e.stopPropagation();
 
         this.initialChart(
+          name.value,
           `${date.value}T${time.value}:00.000Z`,
           timezone.value,
         );
@@ -205,7 +201,10 @@ class HumanDesign extends HTMLElement {
         .filter((x) => x.isValid)
         .map((x, i) => x.plus({ hour: (i + 1) * (n < 0 ? -1 : 1) }).toJSON());
 
-    this.dom<HTMLElement>(".control").then((section) => {
+    Promise.all([
+      this.dom<HTMLElement>(".control"),
+      this.dom<HTMLInputElement>('form input[name="name"]'),
+    ]).then(([section, name]) => {
       section.classList.add("is-loading");
 
       Promise.all(
@@ -219,7 +218,7 @@ class HumanDesign extends HTMLElement {
           .flatMap(({ time, timezone }) =>
             Array.of<string>()
               .concat(shift(time, -12), shift(time, 11))
-              .map((x) => api.getChart(x, timezone)),
+              .map((x) => api.getChart(name.value, x, timezone)),
           ),
       ).then((xs) => {
         this.charts.push(...xs);
@@ -243,11 +242,11 @@ class HumanDesign extends HTMLElement {
     });
   }
 
-  initialChart(time: string, timezone: string) {
+  initialChart(name: string, time: string, timezone: string) {
     this.dom<HTMLElement>("main").then((dom) => {
       dom.classList.add("is-loading");
 
-      api.getChart(time, timezone).then((x) => {
+      api.getChart(name, time, timezone).then((x) => {
         this.charts = [x];
         this.drawChart(x);
 
