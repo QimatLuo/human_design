@@ -256,6 +256,11 @@ export function gate(x: Gate) {
   }
 }
 
+export function profile(x: number) {
+  const [a, b] = x.toString().split("");
+  return `${a}/${b}`;
+}
+
 export function state(x: number) {
   switch (x) {
     case 1:
