@@ -162,7 +162,7 @@ class HumanDesign extends HTMLElement {
 
   drawChart(res: api.Root) {
     this.drawCenters(res.chart.centers);
-    //this.drawGates(res.chart.gates);
+    this.drawGates(res.chart.gates);
     this.drawPlanets(res.chart.planets);
     Promise.all([
       this.dom<SVGTextElement>(".authority"),
@@ -182,13 +182,24 @@ class HumanDesign extends HTMLElement {
       Array<number>(64)
         .fill(1)
         .map((x, i) => x + i)
-        .map((x) => `.gate${x}-c`)
-        .map((x) => this.dom<SVGPathElement>(x)),
+        .map((x) =>
+          Promise.all([
+            this.dom<SVGGElement>(`#gate${x}-c`),
+            this.dom<SVGPathElement>(`#gate${x}-l`),
+          ]),
+        ),
     ).then((xs) => {
-      xs.forEach((x, i) => {
-        const g = gates.find((x) => x.gate === i);
+      xs.forEach(([circle, line], i) => {
+        const g = gates.find((x) => x.gate === i + 1);
         if (g) {
-          x.style.fill = api.gate(g);
+          circle.classList.remove("off");
+          line.style.fill = api.gate(g);
+          this.dom("#Lines").then((x) => {
+            x.append(line);
+          });
+        } else {
+          circle.classList.add("off");
+          line.style.fill = "#ffffff";
         }
       });
     });

@@ -245,11 +245,11 @@ export function definition(x: number) {
 export function gate(x: Gate) {
   switch (x.mode) {
     case 0:
-      return "green";
-    case 1:
       return "#ec8a8c";
-    case 2:
+    case 1:
       return "#094166";
+    case 2:
+      return "url(#red_black)";
     default:
       console.warn("gate", x);
       return "#000000";
