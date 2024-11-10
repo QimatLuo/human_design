@@ -77,7 +77,7 @@ class HumanDesign extends HTMLElement {
   }
 
   createPlantValue(x: api.Planet, shift: number) {
-    const value = ` ${x.gate}.${x.line}`;
+    const value = ` ${x.gate}.${x.line}`.slice(-4);
     const dom = document.createElementNS(SVG_NS, "text");
     dom.setAttributeNS(null, "x", x.activation === 0 ? "95" : "580");
     dom.setAttributeNS(null, "y", `${x.id * shift + 160}`);
