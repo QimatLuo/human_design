@@ -205,7 +205,7 @@ export function center(i: number, xs: number[]) {
     case 1:
       return "#ffffff";
     case 2:
-      return "#eec665";
+      return i === 4 ? "#f7931e" : "#eec665";
     default:
       console.warn("center", xs[i]);
       return "#000000";
