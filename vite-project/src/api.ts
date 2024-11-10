@@ -189,6 +189,8 @@ export function authority(x: number) {
   switch (x) {
     case 0:
       return "情緒權威";
+    case 1:
+      return "薦骨權威";
     case 2:
       return "脾權威";
     case 5:
@@ -214,14 +216,24 @@ export function center(i: number, xs: number[]) {
 
 export function cross(x: number) {
   switch (x) {
+    case 73:
+      return "左角度交叉之循環 (54/53 | 32/42)";
     case 79:
       return "左角度交叉之要求 (58/52 | 48/21)";
+    case 81:
+      return "左角度交叉之分心 (60/56 | 28/27)";
+    case 116:
+      return "左角度交叉之革命 (49/4 | 14/8)";
+    case 117:
+      return "左角度交叉之革命 (4/49 | 8/14)";
     case 125:
       return "左角度交叉之動盪 (18/17 | 39/38)";
     case 181:
       return "右角度交叉之張力 (39/38 | 21/48)";
     case 183:
       return "右角度交叉之張力 (38/39 | 48/21)";
+    case 187:
+      return "右角度交叉之意料之外 (41/31 | 28/27)";
     case 188:
       return "右角度交叉之愛的器皿 (25/46 | 10/15)";
     default:
@@ -236,6 +248,8 @@ export function definition(x: number) {
       return "單一定義";
     case 2:
       return "二分定義";
+    case 3:
+      return "三分定義";
     default:
       console.warn("definition", x);
       return String(x);
@@ -275,12 +289,16 @@ export function state(x: number) {
 
 export function type(x: number) {
   switch (x) {
+    case 0:
+      return "生產者";
     case 1:
-      return "單一定義";
+      return "顯示生產者";
     case 2:
       return "顯示者";
     case 3:
       return "投射者";
+    case 4:
+      return "反映者";
     default:
       console.warn("type", x);
       return String(x);
