@@ -1,5 +1,5 @@
 main {
-  background-image: url('sample.png');
+  background-image: url("sample.png");
   background-repeat: no-repeat;
   background-size: cover;
   background: #ffffff;
@@ -57,7 +57,7 @@ form select {
   margin: 0 1em;
 }
 
-form>div:last-child {
+form > div:last-child {
   text-align: center;
 }
 
@@ -68,10 +68,10 @@ form>div:last-child {
   gap: 8px;
 }
 
-.result>div:nth-of-type(5),
-.result>div:nth-of-type(6),
-.result>div:nth-of-type(7),
-.result>div:nth-of-type(8) {
+.result > div:nth-of-type(5),
+.result > div:nth-of-type(6),
+.result > div:nth-of-type(7),
+.result > div:nth-of-type(8) {
   grid-column: 1 / -1;
 }
 
@@ -84,18 +84,18 @@ form>div:last-child {
   flex-basis: 100%;
 }
 
-.labled>lable {
+.labled > lable {
   text-align: center;
   margin: 1.5em 0;
   font-size: 0.63em;
 }
 
-.labled>hr {
+.labled > hr {
   border: 1px solid #ededed;
   align-self: stretch;
 }
 
-.labled>span {
+.labled > span {
   text-align: center;
   color: #094166;
   font-weight: bold;
@@ -107,12 +107,12 @@ form>div:last-child {
   gap: 1em;
 }
 
-.control>div {
+.control > div {
   text-align: center;
   width: 100%;
 }
 
-.control>div>input {
+.control > div > input {
   width: 100%;
 }
 
