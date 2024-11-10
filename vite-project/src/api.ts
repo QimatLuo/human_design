@@ -272,3 +272,17 @@ export function state(x: number) {
       return 0;
   }
 }
+
+export function type(x: number) {
+  switch (x) {
+    case 1:
+      return "單一定義";
+    case 2:
+      return "顯示者";
+    case 3:
+      return "投射者";
+    default:
+      console.warn("type", x);
+      return String(x);
+  }
+}
