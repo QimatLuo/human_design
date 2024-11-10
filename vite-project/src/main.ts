@@ -76,7 +76,7 @@ class HumanDesign extends HTMLElement {
     });
   }
 
-  createPlantValue(x: api.Planet, shift: number) {
+  createPlanetValue(x: api.Planet, shift: number) {
     const value = ` ${x.gate}.${x.line}`.slice(-4);
     const dom = document.createElementNS(SVG_NS, "text");
     dom.setAttributeNS(null, "x", x.activation === 0 ? "95" : "580");
@@ -251,7 +251,7 @@ class HumanDesign extends HTMLElement {
       g.innerHTML = "";
       const shift = 34.5;
       planets.forEach((x) => {
-        g.append(this.createPlantValue(x, shift));
+        g.append(this.createPlanetValue(x, shift));
         g.append(...this.createTriggers(x, shift));
       });
     });
