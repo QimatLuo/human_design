@@ -9,6 +9,14 @@ import { report } from "@hd/core";
 import type { ApiRes } from "@hd/core/types";
 import { DateTime } from "luxon";
 import { timezones } from "./timezone";
+import {
+  fluentSlider,
+  fluentSliderLabel,
+  provideFluentDesignSystem,
+} from "@fluentui/web-components";
+
+provideFluentDesignSystem().register(fluentSlider(), fluentSliderLabel());
+
 const template = document.createElement("template");
 template.innerHTML = `
 <style>${css}</style>
@@ -17,6 +25,16 @@ ${Form}
 ${Svg}
 ${Result}
 ${Control}
+<fluent-slider min="0" max="23" value="3" step="1">
+    <div slot="thumb" class="thumb-cursor">
+      <span class="tooltip">11:22</span>
+    </div>
+  <fluent-slider-label position="0">00:00</fluent-slider-label>
+  <fluent-slider-label position="6">06:00</fluent-slider-label>
+  <fluent-slider-label position="12">12:00</fluent-slider-label>
+  <fluent-slider-label position="18">18:00</fluent-slider-label>
+  <fluent-slider-label position="23">23:00</fluent-slider-label>
+</fluent-slider>
 </main>
 `;
 const SVG_NS = "http://www.w3.org/2000/svg";
@@ -34,6 +52,14 @@ class HumanDesign extends HTMLElement {
     if (this.shadowRoot) {
       this.shadowRoot.appendChild(template.content.cloneNode(true));
     }
+    Promise.all([
+      this.dom<HTMLInputElement>("fluent-slider"),
+      this.dom<HTMLSpanElement>(".tooltip"),
+    ]).then(([a, b]) => {
+      a.addEventListener("change", () => {
+        b.textContent = a.value;
+      });
+    });
 
     this.dom<HTMLSelectElement>(`form select[name="timezone"]`).then(
       (select) => {
