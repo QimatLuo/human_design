@@ -79,7 +79,7 @@ class HumanDesign extends HTMLElement {
   createPlanetValue(x: api.Planet, shift: number) {
     const value = ` ${x.gate}.${x.line}`.slice(-4);
     const dom = document.createElementNS(SVG_NS, "text");
-    dom.setAttributeNS(null, "x", x.activation === 0 ? "95" : "580");
+    dom.setAttributeNS(null, "x", x.activation === 0 ? "125" : "605");
     dom.setAttributeNS(null, "y", `${x.id * shift + 160}`);
     dom.textContent = value;
     return dom;
