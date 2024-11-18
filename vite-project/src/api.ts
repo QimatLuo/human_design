@@ -195,6 +195,8 @@ export function authority(x: number) {
       return "脾權威";
     case 5:
       return "投射型心權威";
+    case 6:
+      return "月亮循環";
     default:
       console.warn("authority", x);
       return String(x);
@@ -238,6 +240,10 @@ export function cross(x: number) {
       return "左角度交叉之革命 (4/49 | 8/14)";
     case 125:
       return "左角度交叉之動盪 (18/17 | 39/38)";
+    case 131:
+      return "右角度交叉之意識 (5/35 | 64/63)";
+    case 169:
+      return "右角度交叉之服務 (52/58 | 17/18)";
     case 181:
       return "右角度交叉之張力 (39/38 | 21/48)";
     case 183:
@@ -254,12 +260,16 @@ export function cross(x: number) {
 
 export function definition(x: number) {
   switch (x) {
+    case 0:
+      return "無定義";
     case 1:
       return "單一定義";
     case 2:
       return "二分定義";
     case 3:
       return "三分定義";
+    case 4:
+      return "四分定義";
     default:
       console.warn("definition", x);
       return String(x);
