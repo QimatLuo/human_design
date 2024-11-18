@@ -120,19 +120,8 @@ class HumanDesign extends HTMLElement {
   }
 
   drawArrows(planets: api.Planet[]) {
-    Array<number>(2)
-      .fill(0)
-      .map((x, i) => x + i)
-      .flatMap((activation) =>
-        Array<number>(2)
-          .fill(0)
-          .map((x, i) => x + i)
-          .map((id) => ({ activation, id })),
-      )
-      .map((x) =>
-        planets.find((p) => p.activation === x.activation && p.id === x.id),
-      )
-      .filter((x) => !!x)
+    planets
+      .filter((x) => x.id === 0 || x.id === 2)
       .forEach((x) => {
         this.dom<SVGGElement>(`.tone${x.activation}${x.id}`).then((a) => {
           a.textContent = `${x.tone}`;
