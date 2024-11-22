@@ -193,10 +193,12 @@ export function authority(x: number) {
       return "薦骨權威";
     case 2:
       return "脾權威";
+    case 3:
+      return "意志⼒權威"; // 顯示型心權威
     case 5:
       return "投射型心權威";
     case 6:
-      return "月亮循環";
+      return "⽉循環權威"; // 月亮循環, 反響板
     default:
       console.warn("authority", x);
       return String(x);
@@ -234,12 +236,18 @@ export function cross(x: number) {
       return "左角度交叉之要求 (58/52 | 48/21)";
     case 81:
       return "左角度交叉之分心 (60/56 | 28/27)";
+    case 86:
+      return "左角度交叉之教育 (12/11 | 25/46)";
     case 116:
       return "左角度交叉之革命 (49/4 | 14/8)";
     case 117:
       return "左角度交叉之革命 (4/49 | 8/14)";
     case 125:
       return "左角度交叉之動盪 (18/17 | 39/38)";
+    case 126:
+      return "左角度交叉之願望 (3/50 | 41/31)";
+    case 129:
+      return "右角度交叉之意識 (35/5 | 63/64)";
     case 131:
       return "右角度交叉之意識 (5/35 | 64/63)";
     case 169:
