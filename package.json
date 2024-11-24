@@ -15,5 +15,8 @@
     "@hd/api",
     "@hd/core",
     "@hd/test"
-  ]
+  ],
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  }
 }
