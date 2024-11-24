@@ -5,6 +5,7 @@ import { center } from "./center";
 import { cross } from "./cross";
 import { definition } from "./definition";
 import { profile } from "./profile";
+import { signature } from "./signature";
 import { strategy } from "./strategy";
 import { type } from "./type";
 
@@ -16,6 +17,7 @@ export function report(chart: Chart) {
     center: center(chart.centers),
     definition: definition(chart.definition),
     profile: profile(chart.profile),
+    signature: signature(chart.type),
     strategy: strategy(chart.type),
     type: type(chart.type),
   };

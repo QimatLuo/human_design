@@ -500,7 +500,7 @@ export const data: [
 
 describe("api", () => {
   test.each(data)("%s", (localTime, expected) => {
-    const { arrow, theme, signature, ...rest } = expected;
+    const { arrow, theme, ...rest } = expected;
     const result = mock.get(localTime);
     if (result) {
       const { arrow: arrowR, ...res } = report(result.chart);
