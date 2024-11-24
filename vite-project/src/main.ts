@@ -87,7 +87,7 @@ class HumanDesign extends HTMLElement {
     const value = `${x.gate}.${x.line}`.slice(-4);
     const dom = document.createElementNS(SVG_NS, "text");
     dom.setAttributeNS(null, "x", x.activation === 0 ? "125" : "605");
-    dom.setAttributeNS(null, "y", `${x.id * shift + 160}`);
+    dom.setAttributeNS(null, "y", `${customOrder(x.id) * shift + 160}`);
     dom.textContent = value;
     return dom;
   }
@@ -102,7 +102,7 @@ class HumanDesign extends HTMLElement {
       );
       const invert = trigerState(y.state);
       const scale = `scale(1,${invert})`;
-      const translate = `translate(${x.activation === 0 ? 0 : 417}px, ${x.id * shift * invert}px)`;
+      const translate = `translate(${x.activation === 0 ? 0 : 417}px, ${customOrder(x.id) * shift * invert}px)`;
       dom.style.transform = [scale, translate].join(" ");
       dom.style.transformOrigin = "0px 155px";
       dom.style.fill = x.activation === 0 ? "#ec8a8c" : "#094166";
@@ -323,5 +323,18 @@ function trigerState(x: number) {
     default:
       console.warn("state", x);
       return 0;
+  }
+}
+
+function customOrder(planetId: number) {
+  switch (planetId) {
+    case 2:
+      return 4;
+    case 3:
+      return 2;
+    case 4:
+      return 3;
+    default:
+      return planetId;
   }
 }
