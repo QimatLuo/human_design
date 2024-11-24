@@ -4,7 +4,9 @@ import Form from "./form.html?raw";
 import Control from "./control.html?raw";
 import Result from "./result.html?raw";
 import Svg from "./svg.html?raw";
-import * as api from "./api";
+import { restful } from "@hd/api";
+import { report } from "@hd/core";
+import type { ApiRes } from "@hd/core/types";
 import { DateTime } from "luxon";
 import { timezones } from "./timezone";
 const template = document.createElement("template");
@@ -19,8 +21,13 @@ ${Control}
 `;
 const SVG_NS = "http://www.w3.org/2000/svg";
 
+const getChart = restful(
+  import.meta.env["VITE_API"],
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhZGVjNmYzMi00YzhjLTQyNzUtYTYwZC00YjdkY2RiY2QxOTEiLCJ3ZWJzaXRlVXJsIjoiaHR0cHM6Ly9odW1hbmRlc2lnbi1nYWxheHkuY29tIiwiaWF0IjoxNjkxNTcwMjU1fQ.mDRPEURo3d7LyjMl2Hl7xIh3zZuwrLQUvCYfyHnE8ok",
+).serverSideGeneration;
+
 class HumanDesign extends HTMLElement {
-  charts: api.Root[] = [];
+  charts: ApiRes[] = [];
 
   connectedCallback() {
     this.attachShadow({ mode: "open" });
@@ -76,8 +83,8 @@ class HumanDesign extends HTMLElement {
     });
   }
 
-  createPlanetValue(x: api.Planet, shift: number) {
-    const value = ` ${x.gate}.${x.line}`.slice(-4);
+  createPlanetValue(x: ApiRes["chart"]["planets"][number], shift: number) {
+    const value = `${x.gate}.${x.line}`.slice(-4);
     const dom = document.createElementNS(SVG_NS, "text");
     dom.setAttributeNS(null, "x", x.activation === 0 ? "125" : "605");
     dom.setAttributeNS(null, "y", `${x.id * shift + 160}`);
@@ -85,7 +92,7 @@ class HumanDesign extends HTMLElement {
     return dom;
   }
 
-  createTriggers(x: api.Planet, shift: number) {
+  createTriggers(x: ApiRes["chart"]["planets"][number], shift: number) {
     return x.fixing.triggers.map((y) => {
       const dom = document.createElementNS(SVG_NS, "polygon");
       dom.setAttributeNS(
@@ -93,7 +100,7 @@ class HumanDesign extends HTMLElement {
         "points",
         "140.77 149.47 135.81 158.04 145.72 158.04 140.77 149.47",
       );
-      const invert = api.state(y.state);
+      const invert = trigerState(y.state);
       const scale = `scale(1,${invert})`;
       const translate = `translate(${x.activation === 0 ? 0 : 417}px, ${x.id * shift * invert}px)`;
       dom.style.transform = [scale, translate].join(" ");
@@ -119,38 +126,41 @@ class HumanDesign extends HTMLElement {
     });
   }
 
-  drawArrows(planets: api.Planet[]) {
-    planets
-      .filter((x) => x.id === 0 || x.id === 2)
-      .forEach((x) => {
-        this.dom<SVGGElement>(`.tone${x.activation}${x.id}`).then((a) => {
-          a.textContent = `${x.tone}`;
-        });
-        this.dom<SVGGElement>(`.base${x.activation}${x.id}`).then((a) => {
-          a.textContent = `${x.base}`;
-        });
-        this.dom<SVGGElement>(`.arrow${x.activation}${x.id}`).then((a) => {
-          a.style.transform = `scale(${api.arrow(x.tone)},1)`;
-        });
+  drawArrows(
+    xs: {
+      activation: number;
+      base: number;
+      id: number;
+      left: boolean;
+      tone: number;
+    }[],
+  ) {
+    xs.forEach((x) => {
+      const wrap = `.arrow-${x.activation}${x.id}`;
+      this.dom<SVGGElement>(`${wrap} .tone`).then((a) => {
+        a.textContent = `${x.tone}`;
       });
+      this.dom<SVGGElement>(`${wrap} .base`).then((a) => {
+        a.textContent = `${x.base}`;
+      });
+      this.dom<SVGGElement>(`${wrap} .arrow`).then((a) => {
+        a.style.transform = `scale(${x.left ? 1 : -1},1)`;
+      });
+    });
   }
 
-  drawCenters(centers: number[]) {
-    Promise.all(
-      Array<number>(9)
-        .fill(0)
-        .map((x, i) => x + i)
-        .map((x) => `.center${x}`)
-        .map((x) => this.dom<SVGPathElement>(x)),
-    ).then((xs) =>
-      xs.forEach((x, i) => {
-        x.style.fill = api.center(i, centers);
-      }),
-    );
+  drawCenter(center: Record<string, boolean>) {
+    Object.entries(center).forEach(([k, v]) => {
+      this.dom<SVGPathElement>(`.center-${k}`).then((x) => {
+        x.style.fill = v ? "" : "#ffffff";
+      });
+    });
   }
 
-  drawChart(res: api.Root) {
-    this.drawCenters(res.chart.centers);
+  drawChart(res: ApiRes) {
+    const r = report(res.chart);
+    this.drawArrows(r.arrow);
+    this.drawCenter(r.center);
     this.drawGates(res.chart.gates);
     this.drawPlanets(res.chart.planets);
     Promise.all([
@@ -161,16 +171,16 @@ class HumanDesign extends HTMLElement {
       this.dom<SVGTextElement>(".profile"),
       this.dom<SVGTextElement>(".type"),
     ]).then(([authority, name, cross, definition, profile, type]) => {
-      authority.textContent = api.authority(res.chart.authority);
+      authority.textContent = r.authority;
       name.textContent = res.meta.name;
-      cross.textContent = api.cross(res.chart.cross);
-      definition.textContent = api.definition(res.chart.definition);
-      profile.textContent = api.profile(res.chart.profile);
-      type.textContent = api.type(res.chart.type);
+      cross.textContent = r.cross;
+      definition.textContent = r.definition;
+      profile.textContent = r.profile;
+      type.textContent = r.type;
     });
   }
 
-  drawGates(gates: api.Gate[]) {
+  drawGates(gates: ApiRes["chart"]["gates"]) {
     Promise.all(
       Array<number>(64)
         .fill(1)
@@ -186,7 +196,7 @@ class HumanDesign extends HTMLElement {
         const g = gates.find((x) => x.gate === i + 1);
         if (g) {
           circle.classList.remove("off");
-          line.style.fill = api.gate(g);
+          line.style.fill = gate(g.mode);
           this.dom("#Lines").then((x) => {
             x.append(line);
           });
@@ -222,7 +232,7 @@ class HumanDesign extends HTMLElement {
           .flatMap(({ time, timezone }) =>
             Array.of<string>()
               .concat(shift(time, -12), shift(time, 11))
-              .map((x) => api.getChart(name.value, x, timezone)),
+              .map((x) => getChart(name.value, x, timezone)),
           ),
       ).then((xs) => {
         this.charts.push(...xs);
@@ -233,9 +243,7 @@ class HumanDesign extends HTMLElement {
     });
   }
 
-  drawPlanets(planets: api.Planet[]) {
-    this.drawArrows(planets);
-
+  drawPlanets(planets: ApiRes["chart"]["planets"]) {
     this.dom<SVGGElement>(`svg .planets`).then((g) => {
       g.innerHTML = "";
       const shift = 34.5;
@@ -250,7 +258,7 @@ class HumanDesign extends HTMLElement {
     this.dom<HTMLElement>("main").then((dom) => {
       dom.classList.add("is-loading");
 
-      api.getChart(name, time, timezone).then((x) => {
+      getChart(name, time, timezone).then((x) => {
         this.charts = [x];
         this.drawChart(x);
 
@@ -273,3 +281,29 @@ class HumanDesign extends HTMLElement {
 }
 
 window.customElements.define("human-design", HumanDesign);
+
+function gate(x: number) {
+  switch (x) {
+    case 0:
+      return "#ec8a8c";
+    case 1:
+      return "#094166";
+    case 2:
+      return "url(#red_black)";
+    default:
+      console.warn("gate.mode", x);
+      return "#000000";
+  }
+}
+
+function trigerState(x: number) {
+  switch (x) {
+    case 1:
+      return -1;
+    case 2:
+      return 1;
+    default:
+      console.warn("state", x);
+      return 0;
+  }
+}
