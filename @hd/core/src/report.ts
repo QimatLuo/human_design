@@ -7,6 +7,7 @@ import { definition } from "./definition";
 import { profile } from "./profile";
 import { signature } from "./signature";
 import { strategy } from "./strategy";
+import { theme } from "./theme";
 import { type } from "./type";
 
 export function report(chart: Chart) {
@@ -19,6 +20,7 @@ export function report(chart: Chart) {
     profile: profile(chart.profile),
     signature: signature(chart.type),
     strategy: strategy(chart.type),
+    theme: theme(chart.type),
     type: type(chart.type),
   };
 }
