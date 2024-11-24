@@ -169,13 +169,15 @@ class HumanDesign extends HTMLElement {
       this.dom<SVGTextElement>(".cross"),
       this.dom<SVGTextElement>(".definition"),
       this.dom<SVGTextElement>(".profile"),
+      this.dom<SVGTextElement>(".strategy"),
       this.dom<SVGTextElement>(".type"),
-    ]).then(([authority, name, cross, definition, profile, type]) => {
+    ]).then(([authority, name, cross, definition, profile, strategy, type]) => {
       authority.textContent = r.authority;
       name.textContent = res.meta.name;
       cross.textContent = r.cross;
       definition.textContent = r.definition;
       profile.textContent = r.profile;
+      strategy.textContent = r.strategy;
       type.textContent = r.type;
     });
   }

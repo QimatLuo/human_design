@@ -227,7 +227,7 @@ export const data: [
       definition: "單一定義",
       profile: "3/5",
       signature: "平靜",
-      strategy: "回應",
+      strategy: "告知",
       theme: "憤怒",
       type: "顯示者",
     },
@@ -274,9 +274,9 @@ export const data: [
       cross: "左角度交叉之告知 (47/22 | 12/11)",
       definition: "單一定義",
       profile: "6/2",
-      signature: "滿足",
-      strategy: "回應",
-      theme: "挫敗",
+      signature: "平靜",
+      strategy: "告知",
+      theme: "憤怒",
       type: "顯示者",
     },
   ],
@@ -500,7 +500,7 @@ export const data: [
 
 describe("api", () => {
   test.each(data)("%s", (localTime, expected) => {
-    const { arrow, theme, signature, strategy, ...rest } = expected;
+    const { arrow, theme, signature, ...rest } = expected;
     const result = mock.get(localTime);
     if (result) {
       const { arrow: arrowR, ...res } = report(result.chart);
