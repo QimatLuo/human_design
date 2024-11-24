@@ -1,0 +1,63 @@
+services:
+  api:
+    build: .
+    command:
+      - npx
+      - tsx
+      - watch
+      - "@hd/api/src/server.ts"
+    develop:
+      watch:
+        - action: sync
+          ignore:
+            - node_modules/
+          path: ./@hd/api/
+          target: /w/@hd/api/
+
+  test:
+    build: .
+    command:
+      - npm
+      - -w
+      - "@hd/test"
+      - "t"
+    develop:
+      watch:
+        - action: "sync+restart"
+          ignore:
+            - node_modules/
+          path: ./@hd/core/
+          target: /w/@hd/core/
+        - action: "sync+restart"
+          ignore:
+            - node_modules/
+          path: ./@hd/test/
+          target: /w/@hd/test/
+
+  web:
+    build: .
+    command:
+      - npm
+      - -w
+      - "vite-project"
+      - run
+      - dev
+      - --
+      - --host
+    develop:
+      watch:
+        - action: sync
+          ignore:
+            - node_modules/
+          path: ./@hd/core/
+          target: /w/@hd/core/
+        - action: sync
+          ignore:
+            - node_modules/
+          path: ./vite-project
+          target: /w/vite-project/
+        - action: rebuild
+          path: ./vite-project/package.json
+          target: /w/vite-project/package.json
+    environment:
+      VITE_API: ${API_ORIGIN:-http://localhost}:${API_PORT:-3000}
