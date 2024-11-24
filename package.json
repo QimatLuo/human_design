@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run build --ws --if-present",
+    "format": "prettier --write .",
     "test": "npm t --ws --if-present"
   },
   "keywords": [],
