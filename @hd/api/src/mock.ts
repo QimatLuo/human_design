@@ -11674,6 +11674,6 @@ const data: ApiRes[] = [
 ];
 
 export const mock = data.reduce(
-  (m, x) => m.set(x.meta.birthData.time.local, x),
+  (m, x) => m.set(`${x.meta.birthData.time.local}Z`, x),
   new Map<string, ApiRes>(),
 );

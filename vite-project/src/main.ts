@@ -76,7 +76,7 @@ class HumanDesign extends HTMLElement {
 
         this.initialChart(
           name.value,
-          `${date.value}T${time.value}:00.000Z`,
+          `${date.value}T${time.value}:00Z`,
           timezone.value,
         );
       });

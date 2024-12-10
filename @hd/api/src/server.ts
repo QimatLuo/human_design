@@ -8,9 +8,8 @@ http
 
     if (req.method === "POST") {
       req.on("data", async (x: Buffer) => {
-        console.log();
         const localTime = JSON.parse(x.toString("ascii")).tzData.time;
-        const item = mock.get(localTime.slice(0, -1));
+        const item = mock.get(localTime);
         if (item) {
           res.setHeader("content-type", "application/json");
           res.end(JSON.stringify(item));
