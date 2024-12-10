@@ -76,6 +76,7 @@ class HumanDesign extends HTMLElement {
       });
     });
 
+    this.initialChart("local", `1987-06-28T14:45:00Z`, "Asia/Taipei");
     Promise.all([
       this.dom<HTMLFormElement>("form"),
       this.dom<HTMLInputElement>('form input[name="name"]'),
