@@ -156,13 +156,13 @@ class HumanDesign extends HTMLElement {
   ) {
     xs.forEach((x) => {
       const wrap = `.arrow-${x.activation}${x.id}`;
-      this.dom<SVGGElement>(`${wrap} .tone`).then((a) => {
+      this.dom<SVGGElement>(`${wrap}.tone`).then((a) => {
         a.textContent = `${x.tone}`;
       });
-      this.dom<SVGGElement>(`${wrap} .base`).then((a) => {
+      this.dom<SVGGElement>(`${wrap}.base`).then((a) => {
         a.textContent = `${x.base}`;
       });
-      this.dom<SVGGElement>(`${wrap} .arrow`).then((a) => {
+      this.dom<SVGGElement>(`${wrap}.arrow`).then((a) => {
         a.style.transform = `scale(${x.left ? 1 : -1},1)`;
       });
     });
