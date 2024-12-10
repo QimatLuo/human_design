@@ -15,8 +15,8 @@ export interface BirthData {
 }
 
 export interface Location {
-  country: Country;
-  city: City;
+  country?: Country;
+  city?: City;
 }
 
 export interface Country {
