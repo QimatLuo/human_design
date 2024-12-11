@@ -463,7 +463,7 @@ export const data: [
         splenic: true,
         throat: true,
       },
-      cross: "左角度交叉之個人主義 1 (39-38)",
+      cross: "左角度交叉之勤奮 1 (30-29)",
       definition: "單一定義",
       profile: "6/2",
       signature: "滿足",
