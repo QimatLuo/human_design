@@ -14,7 +14,7 @@ export function report(chart: Chart) {
   return {
     arrow: arrow(chart.planets),
     authority: authority(chart.authority, chart.definition),
-    cross: cross(chart.cross),
+    cross: cross(chart.planets, chart.profile),
     center: center(chart.centers),
     definition: definition(chart.definition),
     profile: profile(chart.profile),
