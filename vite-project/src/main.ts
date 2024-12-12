@@ -69,11 +69,14 @@ class HumanDesign extends HTMLElement {
       this.dom<HTMLInputElement>('form input[name="date"]'),
       this.dom<HTMLInputElement>('form input[name="time"]'),
       this.dom<HTMLInputElement>('form select[name="timezone"]'),
-    ]).then(([form, name, date, time, timezone]) => {
+      this.dom<HTMLButtonElement>("form button"),
+    ]).then(([form, name, date, time, timezone, button]) => {
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         e.stopPropagation();
+      });
 
+      button.addEventListener("click", () => {
         this.initialChart(
           name.value,
           `${date.value}T${time.value}:00.000Z`,
