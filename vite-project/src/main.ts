@@ -257,7 +257,9 @@ class HumanDesign extends HTMLElement {
           ),
       ).then((xs) => {
         this.charts.push(...xs);
-        this.charts.sort((a, b) => (a.meta.name > b.meta.name ? 1 : -1));
+        this.charts.sort((a, b) =>
+          a.meta.birthData.time.local > b.meta.birthData.time.local ? 1 : -1,
+        );
         section.classList.add("is-multi");
         section.classList.remove("is-loading");
       });
