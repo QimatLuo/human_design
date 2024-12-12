@@ -1,8 +1,12 @@
+input::-webkit-date-and-time-value {
+  text-align: left;
+}
+
 main {
   background-image: url("sample.png");
   background-repeat: no-repeat;
   background-size: cover;
-  background: #ffffff;
+  background: transparent;
 }
 
 main * {
@@ -55,6 +59,7 @@ form select {
   height: 100%;
   border: none;
   margin: 0 1em;
+  background: transparent;
 }
 
 form > div:last-child {
@@ -79,7 +84,7 @@ form > div:last-child {
   display: grid;
   grid-template-columns: 4.4em 1px auto;
   align-items: center;
-  border: 1px solid #ededed;
+  border: 1px solid #e1e1e1;
   border-radius: 10px;
   flex-basis: 100%;
 }
@@ -91,7 +96,7 @@ form > div:last-child {
 }
 
 .labled > hr {
-  border: 1px solid #ededed;
+  border: 1px solid #e1e1e1;
   align-self: stretch;
 }
 
