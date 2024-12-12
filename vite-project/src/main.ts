@@ -1,5 +1,6 @@
 import "./style.css";
 import css from "./component-style.css?raw";
+import cssSlider from "./slider.css?raw";
 import Form from "./form.html?raw";
 import Control from "./control.html?raw";
 import Result from "./result.html?raw";
@@ -9,9 +10,17 @@ import { report } from "@hd/core";
 import type { ApiRes } from "@hd/core/types";
 import { DateTime } from "luxon";
 import { timezones } from "./timezone";
+import {
+  fluentSlider,
+  fluentSliderLabel,
+  provideFluentDesignSystem,
+} from "@fluentui/web-components";
+
+provideFluentDesignSystem().register(fluentSlider(), fluentSliderLabel());
+
 const template = document.createElement("template");
 template.innerHTML = `
-<style>${css}</style>
+<style>${css}${cssSlider}</style>
 <main class="init">
 ${Form}
 ${Svg}
@@ -54,11 +63,15 @@ class HumanDesign extends HTMLElement {
       button.addEventListener("click", () => this.drawMuliCharts());
     });
 
-    this.dom<HTMLInputElement>(`input[type="range"]`).then((input) => {
-      input.addEventListener("input", () => {
-        const x = this.charts.at(+input.value);
+    Promise.all([
+      this.dom<HTMLInputElement>("fluent-slider"),
+      this.dom<HTMLSpanElement>(".tooltip"),
+    ]).then(([s, t]) => {
+      s.addEventListener("change", () => {
+        const x = this.charts.at(Number(s.value));
         if (x) {
           this.drawChart(x);
+          t.textContent = x.meta.birthData.time.local.slice(-8, -3);
         }
       });
     });
@@ -262,6 +275,7 @@ class HumanDesign extends HTMLElement {
         );
         section.classList.add("is-multi");
         section.classList.remove("is-loading");
+        this.drawSlider();
       });
     });
   }
@@ -274,6 +288,28 @@ class HumanDesign extends HTMLElement {
         g.append(this.createPlanetValue(x, shift));
         g.append(...this.createTriggers(x, shift));
       });
+    });
+  }
+
+  drawSlider() {
+    Promise.all([
+      this.dom<HTMLSpanElement>(".tooltip"),
+      this.dom<HTMLInputElement>("fluent-slider"),
+      this.dom<HTMLElement>(`fluent-slider-label[position="0"]`),
+      this.dom<HTMLElement>(`fluent-slider-label[position="6"]`),
+      this.dom<HTMLElement>(`fluent-slider-label[position="12"]`),
+      this.dom<HTMLElement>(`fluent-slider-label[position="18"]`),
+      this.dom<HTMLElement>(`fluent-slider-label[position="23"]`),
+    ]).then(([tooltip, slider, ...labels]) => {
+      labels
+        .map((x) => [x, x.getAttribute("position")] as const)
+        .concat([[tooltip, slider.value]])
+        .forEach(([x, i]) => {
+          const chart = this.charts.at(Number(i));
+          if (chart) {
+            x.textContent = chart.meta.birthData.time.local.slice(-8, -3);
+          }
+        });
     });
   }
 

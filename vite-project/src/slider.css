@@ -1,0 +1,57 @@
+.slider {
+  padding: 50px 30px;
+  padding-bottom: 0;
+}
+
+.thumb-cursor {
+  display: flex;
+  position: relative;
+  border: none;
+  width: calc(var(--thumb-size) * 1px);
+  height: calc(var(--thumb-size) * 1px);
+  background:
+    padding-box
+      linear-gradient(var(--neutral-fill-rest), var(--neutral-fill-rest)),
+    border-box var(--neutral-stroke-control-rest);
+  border: calc(var(--stroke-width) * 1px) solid transparent;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.thumb-cursor::after {
+  content: "";
+  display: block;
+  border-radius: 50%;
+  width: 100%;
+  margin: 4px;
+  background: var(--accent-fill-rest);
+}
+
+.thumb-cursor:hover {
+  background:
+    padding-box
+      linear-gradient(var(--neutral-fill-rest), var(--neutral-fill-rest)),
+    border-box var(--neutral-stroke-control-hover);
+}
+
+.thumb-cursor:hover::after {
+  background: var(--accent-fill-hover);
+  margin: 3px;
+}
+
+.thumb-cursor .tooltip {
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  top: -200%;
+  left: -0.8em;
+
+  position: absolute;
+  z-index: 1;
+}
+
+.thumb-cursor:hover .tooltip {
+  visibility: visible;
+}

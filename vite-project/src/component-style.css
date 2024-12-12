@@ -125,7 +125,7 @@ form > div:last-child {
   display: none;
 }
 
-.control:not(.is-multi) input {
+.control:not(.is-multi) .slider {
   display: none;
 }
 
