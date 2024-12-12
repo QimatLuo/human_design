@@ -233,9 +233,8 @@ export function cross(xs: Planet[], profile: number) {
 
   const n = mapping.get(key) ?? key;
   const angle = angleMapping.get(a ?? "");
-  const g = `${gates.at(0)}/${gates.at(1)} | ${gates.at(2)}/${gates.at(3)}`;
 
-  return `${angle}交叉之${n} (${g})`;
+  return `${angle}交叉之${n}`;
 }
 
 /*
