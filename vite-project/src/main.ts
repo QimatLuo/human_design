@@ -24,8 +24,10 @@ template.innerHTML = `
 <main class="init">
 ${Form}
 ${Svg}
-${Result}
-${Control}
+<div class="info">
+  ${Result}
+  ${Control}
+</div>
 </main>
 `;
 const SVG_NS = "http://www.w3.org/2000/svg";

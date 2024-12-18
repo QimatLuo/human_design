@@ -24,6 +24,10 @@ main:not(.init) .form {
   display: none;
 }
 
+main.init .info {
+  display: none;
+}
+
 main.is-loading section.form form {
   display: none;
 }
@@ -135,4 +139,23 @@ form > div:last-child {
 
 .control:not(.is-loading) progress {
   display: none;
+}
+
+@media (orientation: landscape) {
+  main {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  main .form {
+    flex-grow: 1;
+  }
+
+  main .info {
+    min-width: 26em;
+  }
+
+  svg {
+    max-width: 750px;
+  }
 }
