@@ -48,9 +48,10 @@ class HumanDesign extends HTMLElement {
 
     this.dom<HTMLSelectElement>(`form select[name="timezone"]`).then(
       (select) => {
-        timezones.forEach((x) => {
+        timezones.forEach(([tz, zh]) => {
           const option = document.createElement("option");
-          option.textContent = x;
+          option.textContent = zh;
+          option.value = tz;
           select.append(option);
         });
         select.value = "Asia/Taipei";
