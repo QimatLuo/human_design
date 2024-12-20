@@ -1,3 +1,7 @@
+:host {
+  all: initial;
+}
+
 input::-webkit-date-and-time-value {
   text-align: left;
 }
@@ -71,22 +75,20 @@ form > div:last-child {
 }
 
 .result {
-  margin: 1.6vw 5vw;
+  margin: 1.6vw 4vw;
   display: grid;
   grid-template-columns: 50% 50%;
   gap: 8px;
 }
 
-.result > div:nth-of-type(5),
-.result > div:nth-of-type(6),
-.result > div:nth-of-type(7),
-.result > div:nth-of-type(8) {
+.result > div:nth-of-type(3),
+.result > div:nth-of-type(10) {
   grid-column: 1 / -1;
 }
 
 .labled {
   display: grid;
-  grid-template-columns: 4.4em 1px auto;
+  grid-template-columns: 3.7em 1px auto;
   align-items: center;
   border: 1px solid #e1e1e1;
   border-radius: 10px;
@@ -95,8 +97,8 @@ form > div:last-child {
 
 .labled > lable {
   text-align: center;
-  margin: 1.5em 0;
-  font-size: 0.63em;
+  margin: 1.7em 0;
+  font-size: 0.5em;
 }
 
 .labled > hr {
@@ -108,10 +110,10 @@ form > div:last-child {
   text-align: center;
   color: #094166;
   font-weight: bold;
+  font-size: 0.82em;
 }
 
 .control {
-  margin-top: 1em;
   display: grid;
   gap: 1em;
 }
