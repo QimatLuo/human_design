@@ -192,6 +192,8 @@ class HumanDesign extends HTMLElement {
       this.dom<SVGTextElement>(".strategy"),
       this.dom<SVGTextElement>(".theme"),
       this.dom<SVGTextElement>(".type"),
+      this.dom<SVGTextElement>(".saturn"),
+      this.dom<SVGTextElement>(".chiron"),
     ]).then(
       ([
         authority,
@@ -203,6 +205,8 @@ class HumanDesign extends HTMLElement {
         strategy,
         theme,
         type,
+        saturn,
+        chiron,
       ]) => {
         authority.textContent = r.authority;
         name.textContent = res.meta.name;
@@ -213,6 +217,8 @@ class HumanDesign extends HTMLElement {
         strategy.textContent = r.strategy;
         theme.textContent = r.theme;
         type.textContent = r.type;
+        saturn.textContent = formatDate(res.chart.cycles.saturn);
+        chiron.textContent = formatDate(res.chart.cycles.chiron);
       },
     );
   }
@@ -381,4 +387,8 @@ function customOrder(planetId: number) {
     default:
       return planetId;
   }
+}
+
+function formatDate(iso: string) {
+  return DateTime.fromISO(iso).toFormat(`yyyy/MM/dd`);
 }
