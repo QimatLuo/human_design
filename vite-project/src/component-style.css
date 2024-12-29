@@ -158,6 +158,7 @@ form > div:last-child {
   }
 
   svg {
+    flex: 1 0 auto;
     max-width: 750px;
   }
 }
