@@ -1,21 +1,21 @@
 <section class="control">
   <div>
     <button class="multi">查看24小時變化</button>
-  </div>
-  <div class="slider">
-    <fluent-slider min="0" max="23" value="12" step="1">
-      <div slot="thumb" class="thumb-cursor">
-        <span class="tooltip">12:00</span>
-      </div>
-      <fluent-slider-label position="0">00:00</fluent-slider-label>
-      <fluent-slider-label position="6">06:00</fluent-slider-label>
-      <fluent-slider-label position="12">12:00</fluent-slider-label>
-      <fluent-slider-label position="18">18:00</fluent-slider-label>
-      <fluent-slider-label position="23">23:00</fluent-slider-label>
-    </fluent-slider>
-  </div>
-  <div>
+
     <progress></progress>
+
+    <div class="slider">
+      <fluent-slider min="0" max="23" value="12" step="1">
+        <div slot="thumb" class="thumb-cursor">
+          <span class="tooltip">12:00</span>
+        </div>
+        <fluent-slider-label position="0">00:00</fluent-slider-label>
+        <fluent-slider-label position="6">06:00</fluent-slider-label>
+        <fluent-slider-label position="12">12:00</fluent-slider-label>
+        <fluent-slider-label position="18">18:00</fluent-slider-label>
+        <fluent-slider-label position="23">23:00</fluent-slider-label>
+      </fluent-slider>
+    </div>
   </div>
   <div>
     <button class="reset">重新繪製</button>

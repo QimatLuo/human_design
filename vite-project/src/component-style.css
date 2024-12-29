@@ -120,7 +120,7 @@ form > div:last-child {
 
 .control {
   display: grid;
-  gap: 1em;
+  gap: 8px;
 }
 
 .control > div {
