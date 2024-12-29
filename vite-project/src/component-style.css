@@ -2,6 +2,11 @@
   all: initial;
 }
 
+select,
+input {
+  font-size: 16px;
+}
+
 input::-webkit-date-and-time-value {
   text-align: left;
 }
