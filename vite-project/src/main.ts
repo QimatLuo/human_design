@@ -66,6 +66,13 @@ class HumanDesign extends HTMLElement {
       button.addEventListener("click", () => this.drawMuliCharts());
     });
 
+    if ("share" in navigator) {
+      this.dom<HTMLButtonElement>(`.control .share`).then((button) => {
+        button.style.display = "block";
+        button.addEventListener("click", () => this.shareUrl());
+      });
+    }
+
     Promise.all([
       this.dom<HTMLInputElement>("fluent-slider"),
       this.dom<HTMLSpanElement>(".tooltip"),
@@ -345,6 +352,14 @@ class HumanDesign extends HTMLElement {
     ]).then(([section, main]) => {
       main.classList.add("init");
       section.classList.remove("is-multi");
+    });
+  }
+
+  shareUrl() {
+    navigator.share({
+      title: "分享你的人類圖",
+      text: "此功能仍在開發中...",
+      url: "https://humandesign-galaxy.com",
     });
   }
 }

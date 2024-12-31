@@ -151,6 +151,16 @@ form > div:last-child {
   display: none;
 }
 
+.control > div:last-child {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+.control .share {
+  display: none;
+}
+
 @media (orientation: landscape) {
   main {
     display: flex;
