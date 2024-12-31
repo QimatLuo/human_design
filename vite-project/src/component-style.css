@@ -103,7 +103,9 @@ form > div:last-child {
 .labeled > label {
   text-align: center;
   margin: 1.7em 0;
-  font-size: 0.5em;
+  font-size: 0.57em;
+  color: #808080;
+  letter-spacing: 0.2em;
 }
 
 .labeled > hr {
@@ -116,6 +118,7 @@ form > div:last-child {
   color: #094166;
   font-weight: bold;
   font-size: 0.82em;
+  letter-spacing: 0.2em;
 }
 
 .control {
