@@ -1,3 +1,7 @@
+:host {
+  --accent-fill-rest: #3a8b9d;
+}
+
 .slider {
   padding: 50px 30px;
   padding-bottom: 16px;
@@ -40,11 +44,11 @@
 }
 
 .thumb-cursor .tooltip {
-  background-color: black;
+  background-color: var(--accent-fill-rest);
   color: #fff;
   text-align: center;
-  padding: 5px;
-  border-radius: 6px;
+  padding: 0.2em 0.5em;
+  border-radius: 1em;
   top: -200%;
   left: -0.8em;
 
@@ -54,4 +58,8 @@
 
 .thumb-cursor:hover .tooltip {
   visibility: visible;
+}
+
+fluent-slider-label {
+  font-size: 8.64px;
 }
