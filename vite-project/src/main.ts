@@ -105,6 +105,7 @@ class HumanDesign extends HTMLElement {
   createPlanetValue(x: ApiRes["chart"]["planets"][number], shift: number) {
     const value = `${x.gate}.${x.line}`.slice(-4);
     const dom = document.createElementNS(SVG_NS, "text");
+    dom.classList.add(x.activation === 0 ? "design" : "personality");
     dom.setAttributeNS(null, "x", x.activation === 0 ? "125" : "605");
     dom.setAttributeNS(null, "y", `${customOrder(x.id) * shift + 160}`);
     dom.textContent = value;
