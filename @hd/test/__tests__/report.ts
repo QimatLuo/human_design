@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@jest/globals";
+import { assertEquals } from "jsr:@std/assert";
 import { report } from "@hd/core";
 import { mock } from "@hd/api";
 
@@ -498,18 +498,18 @@ export const data: [
   ],
 ];
 
-describe("api", () => {
-  test.each(data)("%s", (localTime, expected) => {
+data.forEach(([localTime, expected]) => {
+  Deno.test(localTime, () => {
     const { arrow, ...rest } = expected;
     const result = mock.get(localTime);
     if (result) {
       const { arrow: arrowR, ...res } = report(result.chart);
-      expect(res).toEqual(rest);
+      assertEquals(res, rest);
       if (arrow) {
-        expect(arrowR).toEqual(arrow);
+        assertEquals(arrowR, arrow);
       }
     } else {
-      expect(`${localTime} mock not found`).toEqual(localTime);
+      assertEquals(`${localTime} mock not found`, localTime);
     }
   });
 });
