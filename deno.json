@@ -1,3 +1,8 @@
 {
+  "lint": {
+    "rules": {
+      "exclude": ["no-slow-types"]
+    }
+  },
   "workspace": ["./@hd/api", "./@hd/core"]
 }
