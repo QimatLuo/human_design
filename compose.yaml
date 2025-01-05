@@ -1,15 +1,56 @@
 services:
   api:
+    build: .
+    command:
+      - deno
+      - run
+      - --watch
+      - --allow-env
+      - --allow-net
+      - --allow-run
+      - "@hd/api/src/server.ts"
     environment:
-      PORT: ${API_PORT:-3000}
+      API_PORT: ${API_PORT:-8000}
     ports:
-      - ${API_PORT:-3000}:${API_PORT:-3000}
+      - ${API_PORT:-8000}:${API_PORT:-8000}
+    volumes:
+      - ./:/w
+    working_dir: /w
 
-  test: {}
+  test:
+    command:
+      - deno
+      - test
+      - --watch
+      - "@hd/test"
+    environment:
+      DENO_CERT: /share/West-CA1.crt
+    image: denoland/deno
+    volumes:
+      - share:/share
+      - ./:/w
+    working_dir: /w
 
   web:
+    command:
+      - deno
+      - run
+      - -A
+      - --node-modules-dir
+      - npm:vite
+      - --host
     depends_on:
       api:
         condition: service_started
+    environment:
+      VITE_API: ${API_ORIGIN:-http://localhost}:${API_PORT:-8000}
+    image: denoland/deno
     ports:
       - ${WEB_PORT:-5173}:${WEB_PORT:-5173}
+    volumes:
+      - ./:/w
+    working_dir: /w/vite-project
+
+volumes:
+  share:
+    external: true

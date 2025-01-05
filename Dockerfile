@@ -1,5 +1,3 @@
-FROM node:22-alpine
-RUN apk add curl
-WORKDIR /w
-COPY . .
-RUN npm ci
+FROM denoland/deno
+RUN apt update
+RUN apt install curl -y
