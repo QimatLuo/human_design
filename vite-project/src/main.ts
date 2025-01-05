@@ -8,7 +8,6 @@ import Svg from "./svg.html?raw";
 import { restful } from "@hd/api";
 import { report } from "@hd/core";
 import type { ApiRes } from "@hd/core/types";
-import { DateTime } from "luxon";
 import { timezones } from "./timezone";
 import {
   fluentSlider,
@@ -262,11 +261,12 @@ class HumanDesign extends HTMLElement {
   }
 
   drawMuliCharts() {
-    const shift = (time: string, n: number) =>
-      Array<DateTime<true> | DateTime<false>>(Math.abs(n))
-        .fill(DateTime.fromISO(time).toUTC())
-        .filter((x) => x.isValid)
-        .map((x, i) => x.plus({ hour: (i + 1) * (n < 0 ? -1 : 1) }).toJSON());
+    const shift = (iso: string, n: number) =>
+      Array(Math.abs(n))
+        .fill(iso)
+        .map((x) => Date.parse(x))
+        .map((x, i) => x + ((i + 1) * (n < 0 ? -1 : 1) * 1000 * 60 * 60))
+        .map((x) => new Date(x).toJSON());
 
     Promise.all([
       this.dom<HTMLElement>(".control"),
@@ -408,5 +408,5 @@ function customOrder(planetId: number) {
 }
 
 function formatDate(iso: string) {
-  return DateTime.fromISO(iso).toFormat(`yyyy/MM/dd`);
+  return iso.split("T").map((x) => x.split("-").join("/")).at(0);
 }
