@@ -1,4 +1,4 @@
-import { ApiRes } from "@hd/core/types";
+import type { ApiRes } from "@hd/core";
 
 export function restful(origin: string, token: string) {
   return {

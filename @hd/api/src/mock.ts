@@ -1,4 +1,4 @@
-import { ApiRes } from "@hd/core/types";
+import type { ApiRes } from "@hd/core/";
 
 const data: ApiRes[] = [
   {
