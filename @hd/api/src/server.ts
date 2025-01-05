@@ -9,7 +9,7 @@ http
     res.setHeader("Access-Control-Allow-Origin", "*");
 
     if (req.method === "POST") {
-      req.on("data", async (x: Buffer) => {
+      req.on("data", (x: Buffer) => {
         exec(
           `
 curl 'https://app.maiamechanics.com/api-v2/api/web-calculator/server-side-generation' \
