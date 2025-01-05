@@ -15,7 +15,7 @@
   height: calc(var(--thumb-size) * 1px);
   background:
     padding-box
-      linear-gradient(var(--neutral-fill-rest), var(--neutral-fill-rest)),
+    linear-gradient(var(--neutral-fill-rest), var(--neutral-fill-rest)),
     border-box var(--neutral-stroke-control-rest);
   border: calc(var(--stroke-width) * 1px) solid transparent;
   border-radius: 50%;
@@ -34,7 +34,7 @@
 .thumb-cursor:hover {
   background:
     padding-box
-      linear-gradient(var(--neutral-fill-rest), var(--neutral-fill-rest)),
+    linear-gradient(var(--neutral-fill-rest), var(--neutral-fill-rest)),
     border-box var(--neutral-stroke-control-hover);
 }
 

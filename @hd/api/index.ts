@@ -1,2 +1,2 @@
-export * from "./src/mock";
-export * from "./src/restful";
+export * from "./src/mock.ts";
+export * from "./src/restful.ts";

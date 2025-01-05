@@ -1,14 +1,14 @@
-import { Chart } from "../types/chart";
-import { arrow } from "./arrow";
-import { authority } from "./authority";
-import { center } from "./center";
-import { cross } from "./cross";
-import { definition } from "./definition";
-import { profile } from "./profile";
-import { signature } from "./signature";
-import { strategy } from "./strategy";
-import { theme } from "./theme";
-import { type } from "./type";
+import type { Chart } from "../types/chart.ts";
+import { arrow } from "./arrow.ts";
+import { authority } from "./authority.ts";
+import { center } from "./center.ts";
+import { cross } from "./cross.ts";
+import { definition } from "./definition.ts";
+import { profile } from "./profile.ts";
+import { signature } from "./signature.ts";
+import { strategy } from "./strategy.ts";
+import { theme } from "./theme.ts";
+import { type } from "./type.ts";
 
 export function report(chart: Chart) {
   return {

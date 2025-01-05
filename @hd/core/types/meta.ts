@@ -1,7 +1,7 @@
 export interface Meta {
   type: string;
   name: string;
-  tags: any[];
+  tags: unknown[];
   created: string;
   updated: string;
   dirty: boolean;
@@ -36,7 +36,7 @@ export interface Time {
   utc: string;
   status: string;
   timezone: Timezone;
-  dst: any;
+  dst: unknown;
 }
 
 export interface Timezone {

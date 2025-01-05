@@ -1,5 +1,5 @@
-import { Chart } from "./chart";
-import { Meta } from "./meta";
+import type { Chart } from "./chart.ts";
+import type { Meta } from "./meta.ts";
 
 export interface ApiRes {
   chart: Chart;

@@ -1,5 +1,5 @@
-import type { Planet } from "../types/chart";
-import { PlanetId } from "./PlanetId";
+import type { Planet } from "../types/chart.ts";
+import { PlanetId } from "./PlanetId.ts";
 
 export function arrow(planets: Planet[]) {
   return planets

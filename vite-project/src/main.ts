@@ -8,7 +8,6 @@ import Svg from "./svg.html?raw";
 import { restful } from "@hd/api";
 import { report } from "@hd/core";
 import type { ApiRes } from "@hd/core/types";
-import { DateTime } from "luxon";
 import { timezones } from "./timezone";
 import {
   fluentSlider,
@@ -129,7 +128,9 @@ class HumanDesign extends HTMLElement {
       );
       const invert = trigerState(y.state);
       const scale = `scale(1,${invert})`;
-      const translate = `translate(${x.activation === 0 ? 0 : 417}px, ${customOrder(x.id) * shift * invert}px)`;
+      const translate = `translate(${x.activation === 0 ? 0 : 417}px, ${
+        customOrder(x.id) * shift * invert
+      }px)`;
       dom.style.transform = [scale, translate].join(" ");
       dom.style.transformOrigin = "0px 155px";
       dom.style.fill = x.activation === 0 ? "#ec8a8c" : "#094166";
@@ -240,7 +241,7 @@ class HumanDesign extends HTMLElement {
           Promise.all([
             this.dom<SVGGElement>(`#gate${x}-c`),
             this.dom<SVGPathElement>(`#gate${x}-l`),
-          ]),
+          ])
         ),
     ).then((xs) => {
       xs.forEach(([circle, line], i) => {
@@ -260,11 +261,12 @@ class HumanDesign extends HTMLElement {
   }
 
   drawMuliCharts() {
-    const shift = (time: string, n: number) =>
-      Array<DateTime<true> | DateTime<false>>(Math.abs(n))
-        .fill(DateTime.fromISO(time).toUTC())
-        .filter((x) => x.isValid)
-        .map((x, i) => x.plus({ hour: (i + 1) * (n < 0 ? -1 : 1) }).toJSON());
+    const shift = (iso: string, n: number) =>
+      Array(Math.abs(n))
+        .fill(iso)
+        .map((x) => Date.parse(x))
+        .map((x, i) => x + ((i + 1) * (n < 0 ? -1 : 1) * 1000 * 60 * 60))
+        .map((x) => new Date(x).toJSON());
 
     Promise.all([
       this.dom<HTMLElement>(".control"),
@@ -283,12 +285,12 @@ class HumanDesign extends HTMLElement {
           .flatMap(({ time, timezone }) =>
             Array.of<string>()
               .concat(shift(time, -12), shift(time, 11))
-              .map((x) => getChart(name.value, x, timezone)),
+              .map((x) => getChart(name.value, x, timezone))
           ),
       ).then((xs) => {
         this.charts.push(...xs);
         this.charts.sort((a, b) =>
-          a.meta.birthData.time.local > b.meta.birthData.time.local ? 1 : -1,
+          a.meta.birthData.time.local > b.meta.birthData.time.local ? 1 : -1
         );
         section.classList.add("is-multi");
         section.classList.remove("is-loading");
@@ -364,7 +366,7 @@ class HumanDesign extends HTMLElement {
   }
 }
 
-window.customElements.define("human-design", HumanDesign);
+globalThis.customElements.define("human-design", HumanDesign);
 
 function gate(x: number) {
   switch (x) {
@@ -406,5 +408,5 @@ function customOrder(planetId: number) {
 }
 
 function formatDate(iso: string) {
-  return DateTime.fromISO(iso).toFormat(`yyyy/MM/dd`);
+  return iso.split("T").map((x) => x.split("-").join("/")).at(0);
 }
