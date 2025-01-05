@@ -129,7 +129,9 @@ class HumanDesign extends HTMLElement {
       );
       const invert = trigerState(y.state);
       const scale = `scale(1,${invert})`;
-      const translate = `translate(${x.activation === 0 ? 0 : 417}px, ${customOrder(x.id) * shift * invert}px)`;
+      const translate = `translate(${x.activation === 0 ? 0 : 417}px, ${
+        customOrder(x.id) * shift * invert
+      }px)`;
       dom.style.transform = [scale, translate].join(" ");
       dom.style.transformOrigin = "0px 155px";
       dom.style.fill = x.activation === 0 ? "#ec8a8c" : "#094166";
@@ -240,7 +242,7 @@ class HumanDesign extends HTMLElement {
           Promise.all([
             this.dom<SVGGElement>(`#gate${x}-c`),
             this.dom<SVGPathElement>(`#gate${x}-l`),
-          ]),
+          ])
         ),
     ).then((xs) => {
       xs.forEach(([circle, line], i) => {
@@ -283,12 +285,12 @@ class HumanDesign extends HTMLElement {
           .flatMap(({ time, timezone }) =>
             Array.of<string>()
               .concat(shift(time, -12), shift(time, 11))
-              .map((x) => getChart(name.value, x, timezone)),
+              .map((x) => getChart(name.value, x, timezone))
           ),
       ).then((xs) => {
         this.charts.push(...xs);
         this.charts.sort((a, b) =>
-          a.meta.birthData.time.local > b.meta.birthData.time.local ? 1 : -1,
+          a.meta.birthData.time.local > b.meta.birthData.time.local ? 1 : -1
         );
         section.classList.add("is-multi");
         section.classList.remove("is-loading");
