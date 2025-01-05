@@ -1,4 +1,4 @@
-import { Chart } from "../types/chart.ts";
+import type { Chart } from "../types/chart.ts";
 import { arrow } from "./arrow.ts";
 import { authority } from "./authority.ts";
 import { center } from "./center.ts";

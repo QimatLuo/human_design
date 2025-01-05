@@ -366,7 +366,7 @@ class HumanDesign extends HTMLElement {
   }
 }
 
-window.customElements.define("human-design", HumanDesign);
+globalThis.customElements.define("human-design", HumanDesign);
 
 function gate(x: number) {
   switch (x) {

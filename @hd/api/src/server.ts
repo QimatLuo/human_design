@@ -1,5 +1,7 @@
 import * as http from "node:http";
 import { exec } from "node:child_process";
+import type { Buffer } from "node:buffer";
+import process from "node:process";
 
 http
   .createServer((req, res) => {
