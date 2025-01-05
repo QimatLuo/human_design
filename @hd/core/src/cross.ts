@@ -1,7 +1,7 @@
-import type { Planet } from "../types/chart";
+import type { Planet } from "../types/chart.ts";
 
-import { Activation } from "./Activation";
-import { PlanetId } from "./PlanetId";
+import { Activation } from "./Activation.ts";
+import { PlanetId } from "./PlanetId.ts";
 
 const mapping = new Map([
   ["1,2,4,49-j", "自我表達"],
