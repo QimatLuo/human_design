@@ -164,14 +164,17 @@ class HumanDesign extends HTMLElement {
     }[],
   ) {
     xs.forEach((x) => {
-      const wrap = `.arrow-${x.activation}${x.id}`;
-      this.dom<SVGGElement>(`${wrap} .tone`).then((a) => {
-        a.textContent = `${x.tone}`;
-      });
-      this.dom<SVGGElement>(`${wrap} .base`).then((a) => {
-        a.textContent = `${x.base}`;
-      });
-      this.dom<SVGGElement>(`${wrap} .arrow`).then((a) => {
+      this.dom<SVGTextElement>(`.arrow-${x.activation} .tone-${x.id}`).then(
+        (a) => {
+          a.textContent = `${x.tone}`;
+        },
+      );
+      this.dom<SVGTextElement>(`.arrow-${x.activation} .base-${x.id}`).then(
+        (a) => {
+          a.textContent = `${x.base}`;
+        },
+      );
+      this.dom<SVGPolygonElement>(`#arrow${x.activation}${x.id}`).then((a) => {
         a.style.transform = `scale(${x.left ? 1 : -1},1)`;
       });
     });
@@ -179,7 +182,7 @@ class HumanDesign extends HTMLElement {
 
   drawCenter(center: Record<string, boolean>) {
     Object.entries(center).forEach(([k, v]) => {
-      this.dom<SVGPathElement>(`.center-${k}`).then((x) => {
+      this.dom<SVGPathElement>(`#${k}`).then((x) => {
         x.style.fill = v ? "" : "#ffffff";
       });
     });
@@ -239,23 +242,17 @@ class HumanDesign extends HTMLElement {
         .map((x, i) => x + i)
         .map((x) =>
           Promise.all([
-            this.dom<SVGGElement>(`#gate${x}-c`),
-            this.dom<SVGPathElement>(`#gate${x}-l`),
+            this.dom<SVGGElement>(`#gate${x}-cbg`),
+            this.dom<SVGRectElement>(`#gate${x}-l-b`),
+            this.dom<SVGRectElement>(`#gate${x}-l-r`),
           ])
         ),
     ).then((xs) => {
-      xs.forEach(([circle, line], i) => {
+      xs.forEach(([circle, line, slash], i) => {
         const g = gates.find((x) => x.gate === i + 1);
-        if (g) {
-          circle.classList.remove("off");
-          line.style.fill = gate(g.mode);
-          this.dom("#Lines").then((x) => {
-            x.append(line);
-          });
-        } else {
-          circle.classList.add("off");
-          line.style.fill = "#ffffff";
-        }
+        circle.dataset.mode = g ? g.mode : "";
+        line.dataset.mode = g ? g.mode : "";
+        slash.dataset.mode = g ? g.mode : "";
       });
     });
   }
@@ -367,20 +364,6 @@ class HumanDesign extends HTMLElement {
 }
 
 globalThis.customElements.define("human-design", HumanDesign);
-
-function gate(x: number) {
-  switch (x) {
-    case 0:
-      return "#ec8a8c";
-    case 1:
-      return "#094166";
-    case 2:
-      return "url(#red_black)";
-    default:
-      console.warn("gate.mode", x);
-      return "#000000";
-  }
-}
 
 function trigerState(x: number) {
   switch (x) {
