@@ -75,6 +75,10 @@ form select {
   background: transparent;
 }
 
+form select {
+  width: calc(100% - 2em);
+}
+
 form > div:last-child {
   text-align: center;
 }
