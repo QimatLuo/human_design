@@ -79,7 +79,7 @@ form select {
   width: calc(100% - 2em);
 }
 
-form > div:last-child {
+form>div:last-child {
   text-align: center;
 }
 
@@ -90,8 +90,8 @@ form > div:last-child {
   gap: 8px;
 }
 
-.result > div:nth-of-type(3),
-.result > div:nth-of-type(10) {
+.result>div:nth-of-type(3),
+.result>div:nth-of-type(10) {
   grid-column: 1 / -1;
 }
 
@@ -104,7 +104,7 @@ form > div:last-child {
   flex-basis: 100%;
 }
 
-.labeled > label {
+.labeled>label {
   text-align: center;
   margin: 1.7em 0;
   font-size: 0.57em;
@@ -112,12 +112,12 @@ form > div:last-child {
   letter-spacing: 0.2em;
 }
 
-.labeled > hr {
+.labeled>hr {
   border: 1px solid #e1e1e1;
   align-self: stretch;
 }
 
-.labeled > span {
+.labeled>span {
   text-align: center;
   color: #094166;
   font-weight: bold;
@@ -130,12 +130,12 @@ form > div:last-child {
   gap: 8px;
 }
 
-.control > div {
+.control>div {
   text-align: center;
   width: 100%;
 }
 
-.control > div > input {
+.control>div>input {
   width: 100%;
 }
 
@@ -155,7 +155,7 @@ form > div:last-child {
   display: none;
 }
 
-.control > div:last-child {
+.control>div:last-child {
   display: flex;
   justify-content: center;
   gap: 1em;
