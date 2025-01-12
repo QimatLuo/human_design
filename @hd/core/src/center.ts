@@ -3,11 +3,11 @@ export function center(xs: number[]) {
     ajna: isEnabled(xs[7]),
     g: isEnabled(xs[5]),
     head: isEnabled(xs[8]),
-    heart: isEnabled(xs[4]),
+    ego: isEnabled(xs[4]),
     root: isEnabled(xs[0]),
     sacral: isEnabled(xs[1]),
-    solarPlexus: isEnabled(xs[3]),
-    splenic: isEnabled(xs[2]),
+    solarplexus: isEnabled(xs[3]),
+    spleen: isEnabled(xs[2]),
     throat: isEnabled(xs[6]),
   };
 }
