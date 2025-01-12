@@ -262,7 +262,7 @@ class HumanDesign extends HTMLElement {
             this.dom<SVGGElement>(`#gate${x}-cbg`),
             this.dom<SVGRectElement>(`#gate${x}-l-b`),
             this.dom<SVGRectElement>(`#gate${x}-l-r`),
-          ]),
+          ])
         ),
     ).then((xs) => {
       xs.forEach(([circle, line, slash], i) => {
@@ -299,12 +299,12 @@ class HumanDesign extends HTMLElement {
           .flatMap(({ time, timezone }) =>
             Array.of<string>()
               .concat(shift(time, -12), shift(time, 11))
-              .map((x) => getChart(name.value, x, timezone)),
+              .map((x) => getChart(name.value, x, timezone))
           ),
       ).then((xs) => {
         this.charts.push(...xs);
         this.charts.sort((a, b) =>
-          a.meta.birthData.time.local > b.meta.birthData.time.local ? 1 : -1,
+          a.meta.birthData.time.local > b.meta.birthData.time.local ? 1 : -1
         );
         section.classList.add("is-multi");
         section.classList.remove("is-loading");
