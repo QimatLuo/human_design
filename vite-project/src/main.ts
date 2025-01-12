@@ -8,7 +8,7 @@ import Svg from "./bg.svg?raw";
 import { restful } from "@hd/api";
 import { report } from "@hd/core";
 import type { ApiRes } from "@hd/core/types";
-import { timezones } from "./timezone";
+import { timezones } from "./timezone.ts";
 import {
   fluentSlider,
   fluentSliderLabel,
@@ -47,11 +47,28 @@ class HumanDesign extends HTMLElement {
 
     this.dom<HTMLSelectElement>(`form select[name="timezone"]`).then(
       (select) => {
-        timezones.forEach(([tz, zh]) => {
-          const option = document.createElement("option");
-          option.textContent = zh;
-          option.value = tz;
-          select.append(option);
+        const m = timezones.reduce((m, x) => {
+          const country = x.at(0) ?? "";
+          const xs = m.get(country);
+          if (xs) {
+            xs.push(x);
+          } else {
+            m.set(country, [x]);
+          }
+          return m;
+        }, new Map<string, [string, string, string, string][]>());
+
+        Array.from(m.entries()).forEach(([key, xs]) => {
+          const optgroup = document.createElement("optgroup");
+          optgroup.label = key;
+          select.append(optgroup);
+
+          xs.forEach(([, state, city, tz]) => {
+            const option = document.createElement("option");
+            option.textContent = `${state} / ${city}`;
+            option.value = tz;
+            optgroup.append(option);
+          });
         });
         select.value = "Asia/Taipei";
       },
