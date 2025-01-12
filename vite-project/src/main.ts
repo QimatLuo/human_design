@@ -4,7 +4,7 @@ import cssSlider from "./slider.css?raw";
 import Form from "./form.html?raw";
 import Control from "./control.html?raw";
 import Result from "./result.html?raw";
-import Svg from "./svg.html?raw";
+import Svg from "./bg.svg?raw";
 import { restful } from "@hd/api";
 import { report } from "@hd/core";
 import type { ApiRes } from "@hd/core/types";
