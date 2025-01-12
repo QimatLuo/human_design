@@ -4809,4 +4809,112 @@ NMOHt4iAdRNH5Jo0rVhwNigs/crwYH2T98EtiE3P3lRk7x6BJo0bmW3aMFMpEaGTYo0dfYRQtshD
 Mj9LcTiUKYlkVvlHVMqKCw==
 	]]>
 </i:aipgf>
+  <g>
+    <text class="name" x="50%" y="50"></text>
+    <g class="arrow-n">
+      <g class="arrow-0">
+        <text class="tone-0" x="227.5" y="187"></text>
+        <text class="base-0" x="208" y="187"></text>
+        <text class="tone-3" x="227.5" y="259"></text>
+        <text class="base-3" x="208" y="259"></text>
+      </g>
+      <g class="arrow-1">
+        <text class="tone-0" x="465" y="187"></text>
+        <text class="base-0" x="486" y="187"></text>
+        <text class="tone-3" x="465" y="259"></text>
+        <text class="base-3" x="486" y="259"></text>
+      </g>
+    </g>
+    <g class="planets"></g>
+  </g>
+  <style>
+    #name,
+    [id$="-n"],
+    [id$="-down"],
+    [id$="-up"]
+    {
+      display: none;
+    }
+
+    .name {
+      dominant-baseline: middle;
+      fill: #062a4d;
+      font-size: 30px;
+      font-weight: bold;
+      text-anchor: middle;
+    }
+
+    .arrow-n text {
+      font-size: 0.8em;
+    }
+
+    .arrow-0 text,
+    text.design {
+      fill: #ec8a8c;
+    }
+
+    .arrow-1 text,
+    text.personality {
+      fill: #094166;
+    }
+
+    text[class^="base"] {
+      font-size: 0.65em;
+    }
+
+    #arrow00 {
+      transform-origin: 222px 160px;
+    }
+
+    #arrow03 {
+      transform-origin: 222px 233px;
+    }
+
+    #arrow10 {
+      transform-origin: 478px 160px;
+    }
+
+    #arrow13 {
+      transform-origin: 478px 233px;
+    }
+
+    #head,
+    #ajna,
+    #g {
+      fill: #aee8b8;
+    }
+
+    #ego,
+    #sacral {
+      fill: #f7931e;
+    }
+
+    #throat,
+    #solarplexus,
+    #spleen,
+    #root {
+      fill: #eec665;
+    }
+
+    .planets text {
+      text-anchor: end;
+    }
+
+    circle[data-mode=""] {
+      fill: none;
+
+      + path {
+        fill: #062a4d;
+      }
+    }
+    [data-mode=""] {
+      fill: #ffffff;
+    }
+    [data-mode="0"][id$="-b"] {
+      fill: #ec8a8c;
+    }
+    [data-mode="1"][id$="-r"] {
+      fill: none;
+    }
+  </style>
 </svg>
